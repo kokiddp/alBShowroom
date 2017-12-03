@@ -159,6 +159,9 @@ class Alb {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_action( 'add_meta_boxes', $this, 'add_beer_meta_boxes' );
+		$this->loader->add_action( 'save_post', $this, 'save_beer_meta_boxes', 10, 2 );
+
 	}
 
 	/**
@@ -424,6 +427,302 @@ class Alb {
 		$args = apply_filters( 'beer_tag_taxonomy_args', $args );
 
 		register_taxonomy( 'beer_tag',  array( 'bottled_beer', 'tap_beer' ), $args );
+	}
+
+	/**
+	 * Register the time metaboxes to be used for the beer post type
+	 *
+	 */
+	public function add_beer_meta_boxes() {
+		add_meta_box(
+			'profile_fields',
+			__( 'Beer Profile', 'alb' ),
+			array( $this, 'render_beer_meta_boxes' ),
+			array( 'bottled_beer', 'tap_beer' ),
+			'normal',
+			'high'
+		);
+	}
+
+   /**
+	* The HTML for the beer profile fields
+	*/
+	function render_beer_meta_boxes( $post ) {
+
+		$meta = get_post_custom( $post->ID );
+		$beer_brew_name = ! isset( $meta['beer_brew_name'][0] ) ? '' : $meta['beer_brew_name'][0];
+		$beer_brew_add = ! isset( $meta['beer_brew_add'][0] ) ? '' : $meta['beer_brew_add'][0];
+		$beer_abv = ! isset( $meta['beer_abv'][0] ) ? '' : $meta['beer_abv'][0];
+		$beer_ibu = ! isset( $meta['beer_ibu'][0] ) ? '' : $meta['beer_ibu'][0];
+		$beer_og = ! isset( $meta['beer_og'][0] ) ? '' : $meta['beer_og'][0];
+		$beer_fg = ! isset( $meta['beer_fg'][0] ) ? '' : $meta['beer_fg'][0];
+		$beer_color = ! isset( $meta['beer_color'][0] ) ? '' : $meta['beer_color'][0];
+		$beer_grains = ! isset( $meta['beer_grains'][0] ) ? '' : $meta['beer_grains'][0];
+		$beer_yeast = ! isset( $meta['beer_yeast'][0] ) ? '' : $meta['beer_yeast'][0];
+		$beer_hops = ! isset( $meta['beer_hops'][0] ) ? '' : $meta['beer_hops'][0];
+		$beer_plato = ! isset( $meta['beer_plato'][0] ) ? '' : $meta['beer_plato'][0];
+		$beer_servt = ! isset( $meta['beer_servt'][0] ) ? '' : $meta['beer_servt'][0];
+		$beer_pair = ! isset( $meta['beer_pair'][0] ) ? '' : $meta['beer_pair'][0];
+		$beer_sizes = ! isset( $meta['beer_sizes'][0] ) ? '' : $meta['beer_sizes'][0];
+		$beer_prices = ! isset( $meta['beer_prices'][0] ) ? '' : $meta['beer_prices'][0];
+		$beer_sizem = ! isset( $meta['beer_sizem'][0] ) ? '' : $meta['beer_sizem'][0];
+		$beer_pricem = ! isset( $meta['beer_pricem'][0] ) ? '' : $meta['beer_pricem'][0];
+
+		wp_nonce_field( basename( __FILE__ ), 'profile_fields' ); ?>
+
+		<table class="form-table">
+
+			<tr>
+				<td class="beer_sc" colspan="1">
+					<label for="beer_sc" style="font-weight: bold;"><?php _e( 'Beer Shortcode', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<code class="beer_sc">[<?php echo get_post_type( $post->ID ); ?> id="<?php echo $post->ID; ?>"]</code>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_brew_name" style="font-weight: bold;"><?php _e( 'Brewery', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_brew_name" class="regular-text" value="<?php echo $beer_brew_name; ?>">
+					<p class="description"><?php _e( 'Example: Birrificio Aosta', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_brew_add" style="font-weight: bold;"><?php _e( 'Brewery town and state', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_brew_add" class="regular-text" value="<?php echo $beer_brew_add; ?>">
+					<p class="description"><?php _e( 'Example: Aosta (AO), ITA', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_abv" style="font-weight: bold;"><?php _e( 'Alcohol by volume (ABV)', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_abv" class="regular-text" value="<?php echo $beer_abv; ?>">
+					<p class="description"><?php _e( 'Example: 4.5%', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_ibu" style="font-weight: bold;"><?php _e( 'International Bitterness Units (IBU)', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_ibu" class="regular-text" value="<?php echo $beer_ibu; ?>">
+					<p class="description"><?php _e( 'Example: 40', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_og" style="font-weight: bold;"><?php _e( 'Original Gravity (OG)', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_og" class="regular-text" value="<?php echo $beer_og; ?>">
+					<p class="description"><?php _e( 'Example: 1.046', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_fg" style="font-weight: bold;"><?php _e( 'Final Gravity (FG)', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_fg" class="regular-text" value="<?php echo $beer_fg; ?>">
+					<p class="description"><?php _e( 'Example: 1.020', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_color" style="font-weight: bold;"><?php _e( 'Color/SRM', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_color" class="regular-text" value="<?php echo $beer_color; ?>">
+					<p class="description"><?php _e( 'Example: 24 or Black', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_grains" style="font-weight: bold;"><?php _e( 'Grains', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_grains" class="regular-text" value="<?php echo $beer_grains; ?>">
+					<p class="description"><?php _e( 'Example: Pale, Caramel, Roasted Barley, Oat Flake', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_yeast" style="font-weight: bold;"><?php _e( 'Yeast', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_yeast" class="regular-text" value="<?php echo $beer_yeast; ?>">
+					<p class="description"><?php _e( 'Example: American Ale', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_hops" style="font-weight: bold;"><?php _e( 'Hops', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_hops" class="regular-text" value="<?php echo $beer_hops; ?>">
+					<p class="description"><?php _e( 'Example: East Kent Goldings, Northdown', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_plato" style="font-weight: bold;"><?php _e( 'Plato Degrees', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_plato" class="regular-text" value="<?php echo $beer_plato; ?>">
+					<p class="description"><?php _e( 'Example: 18', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_servt" style="font-weight: bold;"><?php _e( 'Serving Temperature', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_servt" class="regular-text" value="<?php echo $beer_servt; ?>">
+					<p class="description"><?php _e( 'Example: 8°', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_pair" style="font-weight: bold;"><?php _e( 'Pairings', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_pair" class="regular-text" value="<?php echo $beer_pair; ?>">
+					<p class="description"><?php _e( 'Example: Fish, poltry', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_sizes" style="font-weight: bold;"><?php _e( 'Size Small', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_sizes" class="regular-text" value="<?php echo $beer_sizes; ?>">
+					<p class="description"><?php _e( 'Example: 0.22L', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_prices" style="font-weight: bold;"><?php _e( 'Price Small', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_prices" class="regular-text" value="<?php echo $beer_prices; ?>">
+					<p class="description"><?php _e( 'Example: 2.5€', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_sizem" style="font-weight: bold;"><?php _e( 'Size Medium', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_sizem" class="regular-text" value="<?php echo $beer_sizem; ?>">
+					<p class="description"><?php _e( 'Example: 0.4L', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_pricem" style="font-weight: bold;"><?php _e( 'Price Medium', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_pricem" class="regular-text" value="<?php echo $beer_pricem; ?>">
+					<p class="description"><?php _e( 'Example: 5€', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+		</table>
+		</table>
+
+	<?php }
+
+   /**
+	* Save beer metaboxes
+	*
+	*/
+	function save_beer_meta_boxes( $post_id ) {
+
+		global $post;
+
+		// Verify nonce
+		if ( !isset( $_POST['profile_fields'] ) || !wp_verify_nonce( $_POST['profile_fields'], basename(__FILE__) ) ) {
+			return $post_id;
+		}
+
+		// Check Autosave
+		if ( (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) || ( defined('DOING_AJAX') && DOING_AJAX) || isset($_REQUEST['bulk_edit']) ) {
+			return $post_id;
+		}
+
+		// Don't save if only a revision
+		if ( isset( $post->post_type ) && $post->post_type == 'revision' ) {
+			return $post_id;
+		}
+
+		// Check permissions
+		if ( !current_user_can( 'edit_post', $post->ID ) ) {
+			return $post_id;
+		}
+
+		$meta['beer_brew_name'] = ( isset( $_POST['beer_brew_name'] ) ? esc_textarea( $_POST['beer_brew_name'] ) : '' );
+		$meta['beer_brew_add'] = ( isset( $_POST['beer_brew_add'] ) ? esc_textarea( $_POST['beer_brew_add'] ) : '' );
+		$meta['beer_abv'] = ( isset( $_POST['beer_abv'] ) ? esc_textarea( $_POST['beer_abv'] ) : '' );
+		$meta['beer_og'] = ( isset( $_POST['beer_og'] ) ? esc_textarea( $_POST['beer_og'] ) : '' );
+		$meta['beer_ibu'] = ( isset( $_POST['beer_ibu'] ) ? esc_textarea( $_POST['beer_ibu'] ) : '' );
+		$meta['beer_fg'] = ( isset( $_POST['beer_fg'] ) ? esc_textarea( $_POST['beer_fg'] ) : '' );
+		$meta['beer_color'] = ( isset( $_POST['beer_color'] ) ? esc_textarea( $_POST['beer_color'] ) : '' );
+		$meta['beer_grains'] = ( isset( $_POST['beer_grains'] ) ? esc_textarea( $_POST['beer_grains'] ) : '' );
+		$meta['beer_yeast'] = ( isset( $_POST['beer_yeast'] ) ? esc_textarea( $_POST['beer_yeast'] ) : '' );
+		$meta['beer_hops'] = ( isset( $_POST['beer_hops'] ) ? esc_textarea( $_POST['beer_hops'] ) : '' );
+		$meta['beer_plato'] = ( isset( $_POST['beer_plato'] ) ? esc_textarea( $_POST['beer_plato'] ) : '' );
+		$meta['beer_servt'] = ( isset( $_POST['beer_servt'] ) ? esc_textarea( $_POST['beer_servt'] ) : '' );
+		$meta['beer_pair'] = ( isset( $_POST['beer_pair'] ) ? esc_textarea( $_POST['beer_pair'] ) : '' );
+		$meta['beer_sizes'] = ( isset( $_POST['beer_sizes'] ) ? esc_textarea( $_POST['beer_sizes'] ) : '' );
+		$meta['beer_prices'] = ( isset( $_POST['beer_prices'] ) ? esc_textarea( $_POST['beer_prices'] ) : '' );
+		$meta['beer_sizem'] = ( isset( $_POST['beer_sizem'] ) ? esc_textarea( $_POST['beer_sizem'] ) : '' );
+		$meta['beer_pricem'] = ( isset( $_POST['beer_pricem'] ) ? esc_textarea( $_POST['beer_pricem'] ) : '' );
+
+		foreach ( $meta as $key => $value ) {
+			update_post_meta( $post->ID, $key, $value );
+		}
 	}
 
 }

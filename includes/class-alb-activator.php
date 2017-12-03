@@ -31,6 +31,7 @@ class Alb_Activator {
 	 */
 	public static function activate() {
 		flush_rewrite_rules();
+		add_theme_support( 'post-thumbnails' );
 	}
 
 }
