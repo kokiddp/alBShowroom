@@ -100,4 +100,14 @@ class Alb_Public {
 
 	}
 
+	/**
+	 * Add the shortcodes for the public area.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_shortcodes() {
+
+
+	}
+
 }
