@@ -193,6 +193,16 @@ class Alb_Public {
 
 	            <?php the_title(); ?>
 
+	            <?php
+
+                $categories = get_the_terms(get_the_ID(), 'beer_category');
+ 
+                if ( count( $categories ) > 0 ) { 
+                    foreach ($categories as $category) { ?>
+                        <h3><?php echo esc_html( $category->name ); ?></h3>
+                    <?php }?>                    
+                <?php }?>
+
 	            <?php if ( has_post_thumbnail() ) { ?>
 
 	            	<?php echo get_the_post_thumbnail( get_the_ID(), 'medium' ); ?>
@@ -250,6 +260,16 @@ class Alb_Public {
 	        <?php while ( $query->have_posts() ) : $query->the_post(); ?>
 
 	            <?php the_title(); ?>
+
+	            <?php
+
+                $categories = get_the_terms(get_the_ID(), 'beer_category');
+ 
+                if ( count( $categories ) > 0 ) { 
+                    foreach ($categories as $category) { ?>
+                        <h3><?php echo esc_html( $category->name ); ?></h3>
+                    <?php }?>                    
+                <?php }?>
 
 	            <?php if ( has_post_thumbnail() ) { ?>
 
@@ -310,6 +330,16 @@ class Alb_Public {
 				<div class="post-content-inner-wrap sandwich_post_list entry-content">
 
 	                <?php the_title( '<h2 class="sandwich-title">', '</h2>' ); ?>
+
+	                <?php
+
+	                $categories = get_the_terms(get_the_ID(), 'sandwich_category');
+	 
+	                if ( count( $categories ) > 0 ) {
+	                    foreach ($categories as $category) { ?>
+	                        <h3><?php echo esc_html( $category->name ); ?></h3>
+	                    <?php }?>
+	                <?php }?>
 
 	                <?php if ( has_post_thumbnail() ) { ?>
 

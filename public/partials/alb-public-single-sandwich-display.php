@@ -26,6 +26,15 @@
 
                 <?php the_title( '<h2 class="sandwich-title">', '</h2>' ); ?>
 
+                <?php
+                $categories = get_the_terms(get_the_ID(), 'sandwich_category');
+ 
+                if ( count( $categories ) > 0 ) { 
+                    foreach ($categories as $category) { ?>
+                        <h3><?php echo esc_html( $category->name ); ?></h3>
+                    <?php }?>
+                <?php }?>
+
                 <?php if ( has_post_thumbnail() ) { ?>
 
 	                <div class="sandwich_image_wrap">	                    
