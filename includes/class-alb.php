@@ -898,6 +898,16 @@ class Alb {
 		<table class="form-table">
 
 			<tr>
+				<td class="sandwich_sc" colspan="1">
+					<label for="sandwich_sc" style="font-weight: bold;"><?php _e( 'Sandwich Shortcode', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<code class="sandwich_sc">[<?php echo get_post_type( $post->ID ); ?> id="<?php echo $post->ID; ?>"]</code>
+				</td>
+			</tr>
+
+			<tr>
 				<td class="sandwich_meta_box_td" colspan="1">
 					<label for="sandwich_ingredient_1" style="font-weight: bold;"><?php _e( 'Ingredient 1', 'alb' ); ?>
 					</label>
