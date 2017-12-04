@@ -162,6 +162,9 @@ class Alb {
 		$this->loader->add_action( 'add_meta_boxes', $this, 'add_beer_meta_boxes' );
 		$this->loader->add_action( 'save_post', $this, 'save_beer_meta_boxes', 10, 2 );
 
+		$this->loader->add_action( 'add_meta_boxes', $this, 'add_sandwich_meta_boxes' );
+		$this->loader->add_action( 'save_post', $this, 'save_sandwich_meta_boxes', 10, 2 );
+
 	}
 
 	/**
@@ -196,6 +199,10 @@ class Alb {
 		$this->loader->add_action( 'init', $this, 'register_tap_beer_post_type', 0 );
 		$this->loader->add_action( 'init', $this, 'register_beer_taxonomy_category', 0 );
 		$this->loader->add_action( 'init', $this, 'register_beer_taxonomy_tag', 0 );
+
+		$this->loader->add_action( 'init', $this, 'register_sandwich_post_type', 0 );
+		$this->loader->add_action( 'init', $this, 'register_sandwich_taxonomy_category', 0 );
+		$this->loader->add_action( 'init', $this, 'register_sandwich_taxonomy_tag', 0 );
 
 	}
 
@@ -344,6 +351,50 @@ class Alb {
 	}
 
 	/**
+	 * Register the Sandwich custom post type.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/register_post_type
+	 */
+	public function register_sandwich_post_type() {
+		$labels = array(
+			'name'               => __( 'Sandwiches', 'alb' ),
+			'singular_name'      => __( 'Sandwich', 'alb' ),
+			'add_new'            => __( 'Add Sandwich', 'alb' ),
+			'add_new_item'       => __( 'Add Sandwich', 'alb' ),
+			'edit_item'          => __( 'Edit Sandwich', 'alb' ),
+			'new_item'           => __( 'New Sandwich', 'alb' ),
+			'view_item'          => __( 'View Sandwich', 'alb' ),
+			'search_items'       => __( 'Search Sandwich', 'alb' ),
+			'not_found'          => __( 'No Sandwich found', 'alb' ),
+			'not_found_in_trash' => __( 'No Sandwich in the trash', 'alb' ),
+		);
+
+		$supports = array(
+			'title',
+			'editor',
+			'thumbnail',
+			'revisions',
+			'tags',
+			'excerpt'
+		);
+
+		$args = array(
+			'labels'          => $labels,
+			'supports'        => $supports,
+			'public'          => true,
+			'capability_type' => 'post',
+			'rewrite'         => array( 'slug' => __( 'sandwich', 'alb' ) ), // Permalinks format
+			'menu_position'   => 30,
+			'menu_icon'       => 'dashicons-book',
+		);
+
+		//filter for altering the args
+		$args = apply_filters( 'sandwich_post_type_args', $args );
+
+		register_post_type( 'sandwich', $args );
+	}
+
+	/**
 	 * Register a taxonomy for Beer Categories.
 	 *
 	 * @link http://codex.wordpress.org/Function_Reference/register_taxonomy
@@ -430,12 +481,98 @@ class Alb {
 	}
 
 	/**
+	 * Register a taxonomy for Sandwich Categories.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/register_taxonomy
+	 */
+	public function register_sandwich_taxonomy_category() {
+		$labels = array(
+			'name'                       => __( 'Sandwich Categories', 'alb' ),
+			'singular_name'              => __( 'Sandwich Category', 'alb' ),
+			'menu_name'                  => __( 'Sandwich Categories', 'alb' ),
+			'edit_item'                  => __( 'Edit Sandwich Category', 'alb' ),
+			'update_item'                => __( 'Update Sandwich Category', 'alb' ),
+			'add_new_item'               => __( 'Add New Sandwich Category', 'alb' ),
+			'new_item_name'              => __( 'New Sandwich Category Name', 'alb' ),
+			'parent_item'                => __( 'Parent Sandwich Category', 'alb' ),
+			'parent_item_colon'          => __( 'Parent Sandwich Category:', 'alb' ),
+			'all_items'                  => __( 'All Sandwich Categories', 'alb' ),
+			'search_items'               => __( 'Search Sandwich Categories', 'alb' ),
+			'popular_items'              => __( 'Popular Sandwich Categories', 'alb' ),
+			'separate_items_with_commas' => __( 'Separate Sandwich categories with commas', 'alb' ),
+			'add_or_remove_items'        => __( 'Add or remove Sandwich categories', 'alb' ),
+			'choose_from_most_used'      => __( 'Choose from the most used Sandwich categories', 'alb' ),
+			'not_found'                  => __( 'No Sandwich categories found.', 'alb' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'public'            => true,
+			'show_in_nav_menus' => true,
+			'show_ui'           => true,
+			'show_tagcloud'     => true,
+			'hierarchical'      => true,
+			'rewrite'           => array( 'slug' => __('sandwich_category', 'alb') ),
+			'show_admin_column' => true,
+			'query_var'         => true,
+		);
+
+		//filter for altering the args
+		$args = apply_filters( 'sandwich_category_taxonomy_args', $args );
+
+		register_taxonomy( 'sandwich_category',  array( 'sandwich' ), $args );
+	}
+
+	/**
+	 * Register a taxonomy for Sandwich Tags.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/register_taxonomy
+	 */
+	public function register_sandwich_taxonomy_tag() {
+		$labels = array(
+			'name'                       => __( 'Sandwich Tags', 'alb' ),
+			'singular_name'              => __( 'Sandwich Tag', 'alb' ),
+			'menu_name'                  => __( 'Sandwich Tags', 'alb' ),
+			'edit_item'                  => __( 'Edit Sandwich Tag', 'alb' ),
+			'update_item'                => __( 'Update Sandwich Tag', 'alb' ),
+			'add_new_item'               => __( 'Add New Sandwich Tag', 'alb' ),
+			'new_item_name'              => __( 'New Sandwich Tag Name', 'alb' ),
+			'parent_item'                => null,
+			'parent_item_colon'          => null,
+			'all_items'                  => __( 'All Sandwich Tags', 'alb' ),
+			'search_items'               => __( 'Search Sandwich Tag', 'alb' ),
+			'popular_items'              => __( 'Popular Sandwich Tag', 'alb' ),
+			'separate_items_with_commas' => __( 'Separate Sandwich Tags with commas', 'alb' ),
+			'add_or_remove_items'        => __( 'Add or remove Sandwich Tags', 'alb' ),
+			'choose_from_most_used'      => __( 'Choose from the most used Sandwich Tags', 'alb' ),
+			'not_found'                  => __( 'No Sandwich Tag found.', 'alb' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'public'            => true,
+			'show_in_nav_menus' => true,
+			'show_ui'           => true,
+			'show_tagcloud'     => true,
+			'hierarchical'      => false,
+			'rewrite'           => array( 'slug' => __('sandwich', 'alb') ),
+			'show_admin_column' => true,
+			'query_var'         => true,
+		);
+
+		//filter for altering the args
+		$args = apply_filters( 'sandwich_tag_taxonomy_args', $args );
+
+		register_taxonomy( 'sandwich_tag',  array( 'sandwich' ), $args );
+	}
+
+	/**
 	 * Register the time metaboxes to be used for the beer post type
 	 *
 	 */
 	public function add_beer_meta_boxes() {
 		add_meta_box(
-			'profile_fields',
+			'beer_profile_fields',
 			__( 'Beer Profile', 'alb' ),
 			array( $this, 'render_beer_meta_boxes' ),
 			array( 'bottled_beer', 'tap_beer' ),
@@ -468,7 +605,7 @@ class Alb {
 		$beer_sizem = ! isset( $meta['beer_sizem'][0] ) ? '' : $meta['beer_sizem'][0];
 		$beer_pricem = ! isset( $meta['beer_pricem'][0] ) ? '' : $meta['beer_pricem'][0];
 
-		wp_nonce_field( basename( __FILE__ ), 'profile_fields' ); ?>
+		wp_nonce_field( basename( __FILE__ ), 'beer_profile_fields' ); ?>
 
 		<table class="form-table">
 
@@ -670,7 +807,6 @@ class Alb {
 			</tr>
 
 		</table>
-		</table>
 
 	<?php }
 
@@ -683,7 +819,7 @@ class Alb {
 		global $post;
 
 		// Verify nonce
-		if ( !isset( $_POST['profile_fields'] ) || !wp_verify_nonce( $_POST['profile_fields'], basename(__FILE__) ) ) {
+		if ( !isset( $_POST['beer_profile_fields'] ) || !wp_verify_nonce( $_POST['beer_profile_fields'], basename(__FILE__) ) ) {
 			return $post_id;
 		}
 
@@ -720,6 +856,148 @@ class Alb {
 		$meta['beer_sizem'] = ( isset( $_POST['beer_sizem'] ) ? esc_textarea( $_POST['beer_sizem'] ) : '' );
 		$meta['beer_pricem'] = ( isset( $_POST['beer_pricem'] ) ? esc_textarea( $_POST['beer_pricem'] ) : '' );
 
+		foreach ( $meta as $key => $value ) {
+			update_post_meta( $post->ID, $key, $value );
+		}
+	}
+
+	/**
+	 * Register the time metaboxes to be used for the sandwich post type
+	 *
+	 */
+	public function add_sandwich_meta_boxes() {
+		add_meta_box(
+			'sandwich_profile_fields',
+			__( 'Sandwich Profile', 'alb' ),
+			array( $this, 'render_sandwich_meta_boxes' ),
+			array( 'sandwich' ),
+			'normal',
+			'high'
+		);
+	}
+
+   /**
+	* The HTML for the sandwich profile fields
+	*/
+	function render_sandwich_meta_boxes( $post ) {
+
+		$meta = get_post_custom( $post->ID );
+		$sandwich_ingredient_1 = ! isset( $meta['sandwich_ingredient_1'][0] ) ? '' : $meta['sandwich_ingredient_1'][0];
+		$sandwich_ingredient_2 = ! isset( $meta['sandwich_ingredient_2'][0] ) ? '' : $meta['sandwich_ingredient_2'][0];
+		$sandwich_ingredient_3 = ! isset( $meta['sandwich_ingredient_3'][0] ) ? '' : $meta['sandwich_ingredient_3'][0];
+		$sandwich_ingredient_4 = ! isset( $meta['sandwich_ingredient_4'][0] ) ? '' : $meta['sandwich_ingredient_4'][0];
+		$sandwich_ingredient_5 = ! isset( $meta['sandwich_ingredient_5'][0] ) ? '' : $meta['sandwich_ingredient_5'][0];		
+		$sandwich_price = ! isset( $meta['sandwich_price'][0] ) ? '' : $meta['sandwich_price'][0];
+
+		wp_nonce_field( basename( __FILE__ ), 'sandwich_profile_fields' ); ?>
+
+		<table class="form-table">
+
+			<tr>
+				<td class="sandwich_meta_box_td" colspan="1">
+					<label for="sandwich_ingredient_1" style="font-weight: bold;"><?php _e( 'Ingredient 1', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="sandwich_ingredient_1" class="regular-text" value="<?php echo $sandwich_ingredient_1; ?>">
+					<p class="description"><?php _e( 'Example: Ciabatta Breead', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="sandwich_meta_box_td" colspan="1">
+					<label for="sandwich_ingredient_2" style="font-weight: bold;"><?php _e( 'Ingredient 2', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="sandwich_ingredient_2" class="regular-text" value="<?php echo $sandwich_ingredient_2; ?>">
+					<p class="description"><?php _e( 'Example: Fassone Hamburger (200g)', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="sandwich_meta_box_td" colspan="1">
+					<label for="sandwich_ingredient_3" style="font-weight: bold;"><?php _e( 'Ingredient 3', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="sandwich_ingredient_3" class="regular-text" value="<?php echo $sandwich_ingredient_3; ?>">
+					<p class="description"><?php _e( 'Example: Brie Cheese', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="sandwich_meta_box_td" colspan="1">
+					<label for="sandwich_ingredient_4" style="font-weight: bold;"><?php _e( 'Ingredient 4', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="sandwich_ingredient_4" class="regular-text" value="<?php echo $sandwich_ingredient_4; ?>">
+					<p class="description"><?php _e( 'Example: Bacon', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="sandwich_meta_box_td" colspan="1">
+					<label for="sandwich_ingredient_5" style="font-weight: bold;"><?php _e( 'Ingredient 5', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="sandwich_ingredient_5" class="regular-text" value="<?php echo $sandwich_ingredient_5; ?>">
+					<p class="description"><?php _e( 'Example: Mustard', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="sandwich_meta_box_td" colspan="1">
+					<label for="sandwich_price" style="font-weight: bold;"><?php _e( 'Price', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="number" name="sandwich_price" class="regular-text" value="<?php echo $sandwich_price; ?>">€
+					<p class="description"><?php _e( 'Example: 5', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+		</table>
+
+	<?php }
+
+   /**
+	* Save beer metaboxes
+	*
+	*/
+	function save_sandwich_meta_boxes( $post_id ) {
+
+		global $post;
+
+		// Verify nonce
+		if ( !isset( $_POST['sandwich_profile_fields'] ) || !wp_verify_nonce( $_POST['sandwich_profile_fields'], basename(__FILE__) ) ) {
+			return $post_id;
+		}
+
+		// Check Autosave
+		if ( (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) || ( defined('DOING_AJAX') && DOING_AJAX) || isset($_REQUEST['bulk_edit']) ) {
+			return $post_id;
+		}
+
+		// Don't save if only a revision
+		if ( isset( $post->post_type ) && $post->post_type == 'revision' ) {
+			return $post_id;
+		}
+
+		// Check permissions
+		if ( !current_user_can( 'edit_post', $post->ID ) ) {
+			return $post_id;
+		}
+
+		$meta['sandwich_ingredient_1'] = ( isset( $_POST['sandwich_ingredient_1'] ) ? esc_textarea( $_POST['sandwich_ingredient_1'] ) : '' );
+		$meta['sandwich_ingredient_1'] = ( isset( $_POST['sandwich_ingredient_1'] ) ? esc_textarea( $_POST['sandwich_ingredient_1'] ) : '' );
+		$meta['sandwich_ingredient_1'] = ( isset( $_POST['sandwich_ingredient_1'] ) ? esc_textarea( $_POST['sandwich_ingredient_1'] ) : '' );
+		$meta['sandwich_ingredient_1'] = ( isset( $_POST['sandwich_ingredient_1'] ) ? esc_textarea( $_POST['sandwich_ingredient_1'] ) : '' );
+		$meta['sandwich_ingredient_1'] = ( isset( $_POST['sandwich_ingredient_1'] ) ? esc_textarea( $_POST['sandwich_ingredient_1'] ) : '' );
+		$meta['sandwich_price'] = ( isset( $_POST['sandwich_price'] ) ? esc_textarea( $_POST['sandwich_price'] ) : '' );
+		
 		foreach ( $meta as $key => $value ) {
 			update_post_meta( $post->ID, $key, $value );
 		}
