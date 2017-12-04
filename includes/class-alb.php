@@ -181,6 +181,10 @@ class Alb {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+		$this->loader->add_filter( 'template_include', $plugin_public, 'bottled_beer_templates' );
+		$this->loader->add_filter( 'template_include', $plugin_public, 'tap_beer_templates' );
+		$this->loader->add_filter( 'template_include', $plugin_public, 'sandwich_templates' );
+
 	}
 
 	/**
@@ -992,10 +996,10 @@ class Alb {
 		}
 
 		$meta['sandwich_ingredient_1'] = ( isset( $_POST['sandwich_ingredient_1'] ) ? esc_textarea( $_POST['sandwich_ingredient_1'] ) : '' );
-		$meta['sandwich_ingredient_1'] = ( isset( $_POST['sandwich_ingredient_1'] ) ? esc_textarea( $_POST['sandwich_ingredient_1'] ) : '' );
-		$meta['sandwich_ingredient_1'] = ( isset( $_POST['sandwich_ingredient_1'] ) ? esc_textarea( $_POST['sandwich_ingredient_1'] ) : '' );
-		$meta['sandwich_ingredient_1'] = ( isset( $_POST['sandwich_ingredient_1'] ) ? esc_textarea( $_POST['sandwich_ingredient_1'] ) : '' );
-		$meta['sandwich_ingredient_1'] = ( isset( $_POST['sandwich_ingredient_1'] ) ? esc_textarea( $_POST['sandwich_ingredient_1'] ) : '' );
+		$meta['sandwich_ingredient_2'] = ( isset( $_POST['sandwich_ingredient_2'] ) ? esc_textarea( $_POST['sandwich_ingredient_2'] ) : '' );
+		$meta['sandwich_ingredient_3'] = ( isset( $_POST['sandwich_ingredient_3'] ) ? esc_textarea( $_POST['sandwich_ingredient_3'] ) : '' );
+		$meta['sandwich_ingredient_4'] = ( isset( $_POST['sandwich_ingredient_4'] ) ? esc_textarea( $_POST['sandwich_ingredient_4'] ) : '' );
+		$meta['sandwich_ingredient_5'] = ( isset( $_POST['sandwich_ingredient_5'] ) ? esc_textarea( $_POST['sandwich_ingredient_5'] ) : '' );
 		$meta['sandwich_price'] = ( isset( $_POST['sandwich_price'] ) ? esc_textarea( $_POST['sandwich_price'] ) : '' );
 		
 		foreach ( $meta as $key => $value ) {

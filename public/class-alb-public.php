@@ -110,4 +110,46 @@ class Alb_Public {
 
 	}
 
+	/**
+	 * Register the Bottled Beer Template.
+	 *
+	 * @since    1.0.0
+	 */
+	public function bottled_beer_templates( $template ) {
+	    $post_types = array( 'bottled_beer' );
+
+	    if ( is_singular( $post_types ) )
+	        $template = plugin_dir_path( __FILE__ ) . 'partials/alb-public-single-bottled_beer-display.php';
+
+	    return $template;
+	}
+
+	/**
+	 * Register the Tap Beer Template.
+	 *
+	 * @since    1.0.0
+	 */
+	public function tap_beer_templates( $template ) {
+	    $post_types = array( 'tap_beer' );
+
+	    if ( is_singular( $post_types ) )
+	        $template = plugin_dir_path( __FILE__ ) . 'partials/alb-public-single-tap_beer-display.php';
+
+	    return $template;
+	}
+
+	/**
+	 * Register the Sandwich Template.
+	 *
+	 * @since    1.0.0
+	 */
+	public function sandwich_templates( $template ) {
+	    $post_types = array( 'sandwich' );
+
+	    if ( is_singular( $post_types ) )
+	        $template = plugin_dir_path( __FILE__ ) . 'partials/alb-public-single-sandwich-display.php';
+
+	    return $template;
+	}
+
 }
