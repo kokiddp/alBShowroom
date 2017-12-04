@@ -17,13 +17,22 @@
 
 <?php the_title(); ?>
 
-<?php
-$categories = get_the_terms(get_the_ID(), 'sandwich_category');
-
-if ( count( $categories ) > 0 ) { 
-    foreach ($categories as $category) { ?>
-        <h3><?php echo esc_html( $category->name ); ?></h3>
+<?php $taxonomies = get_the_terms(get_the_ID(), 'beer_tag'); 
+if ( $taxonomies && count( $taxonomies ) > 0 ) {
+    
+    foreach ($taxonomies as $taxonomy) { ?>
+        <?php echo esc_html( $taxonomy->name ); ?>
     <?php }?>
+
+<?php }?>
+
+<?php $categories = get_the_terms(get_the_ID(), 'beer_category');
+if ( count( $categories ) > 0 ) {
+
+    foreach ($categories as $category) { ?>
+        <?php echo esc_html( $category->name ); ?>
+    <?php }?>
+
 <?php }?>
 
 <?php if ( has_post_thumbnail() ) { ?>

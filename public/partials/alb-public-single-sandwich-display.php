@@ -24,15 +24,24 @@
 
             <div class="post-content-inner-wrap sandwich_post_list entry-content">
 
-                <?php the_title( '<h2 class="sandwich-title">', '</h2>' ); ?>
+                <?php the_title( '<h1 class="sandwich-title">', '</h1>' ); ?>
 
-                <?php
-                $categories = get_the_terms(get_the_ID(), 'sandwich_category');
- 
-                if ( count( $categories ) > 0 ) { 
+                <?php $taxonomies = get_the_terms(get_the_ID(), 'sandwich_tag'); 
+                if ( $taxonomies && count( $taxonomies ) > 0 ) {
+                    
+                    foreach ($taxonomies as $taxonomy) { ?>
+                        <h2><?php echo esc_html( $taxonomy->name ); ?></h2>
+                    <?php }?>
+
+                <?php }?>
+
+                <?php $categories = get_the_terms(get_the_ID(), 'sandwich_category'); 
+                if ( count( $categories ) > 0 ) {
+
                     foreach ($categories as $category) { ?>
                         <h3><?php echo esc_html( $category->name ); ?></h3>
                     <?php }?>
+
                 <?php }?>
 
                 <?php if ( has_post_thumbnail() ) { ?>
