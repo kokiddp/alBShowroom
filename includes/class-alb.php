@@ -159,11 +159,14 @@ class Alb {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'alb_add_admin_menu' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'alb_settings_init' );
+
 		$this->loader->add_action( 'add_meta_boxes', $this, 'add_beer_meta_boxes' );
 		$this->loader->add_action( 'save_post', $this, 'save_beer_meta_boxes', 10, 2 );
 
 		$this->loader->add_action( 'add_meta_boxes', $this, 'add_sandwich_meta_boxes' );
-		$this->loader->add_action( 'save_post', $this, 'save_sandwich_meta_boxes', 10, 2 );
+		$this->loader->add_action( 'save_post', $this, 'save_sandwich_meta_boxes', 10, 2 );		
 
 	}
 
@@ -207,6 +210,8 @@ class Alb {
 		$this->loader->add_action( 'init', $this, 'register_sandwich_post_type', 0 );
 		$this->loader->add_action( 'init', $this, 'register_sandwich_taxonomy_category', 0 );
 		$this->loader->add_action( 'init', $this, 'register_sandwich_taxonomy_tag', 0 );
+
+		$this->loader->add_action( 'wp', $plugin_public, 'taplist_page' );
 
 	}
 
@@ -301,7 +306,7 @@ class Alb {
 			'capability_type' => 'post',
 			'rewrite'         => array( 'slug' => __( 'bottled_beer', 'alb' ) ), // Permalinks format
 			'menu_position'   => 30,
-			'menu_icon'       => 'dashicons-book',
+			'menu_icon'       => 'dashicons-carrot',
 		);
 
 		//filter for altering the args
@@ -345,7 +350,7 @@ class Alb {
 			'capability_type' => 'post',
 			'rewrite'         => array( 'slug' => __( 'tap_beer', 'alb' ) ), // Permalinks format
 			'menu_position'   => 30,
-			'menu_icon'       => 'dashicons-book',
+			'menu_icon'       => 'dashicons-palmtree',
 		);
 
 		//filter for altering the args
@@ -389,7 +394,7 @@ class Alb {
 			'capability_type' => 'post',
 			'rewrite'         => array( 'slug' => __( 'sandwich', 'alb' ) ), // Permalinks format
 			'menu_position'   => 30,
-			'menu_icon'       => 'dashicons-book',
+			'menu_icon'       => 'dashicons-heart',
 		);
 
 		//filter for altering the args

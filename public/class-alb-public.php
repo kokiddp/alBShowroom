@@ -155,6 +155,21 @@ class Alb_Public {
 	    return $template;
 	}
 
+	/**
+	 * Register the Tap List Page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function taplist_page( $template ) {
+
+	    if(is_page('taplist')){	
+			$page = plugin_dir_path( __FILE__ ) . 'partials/alb-public-taplist-display.php';
+			include($page);
+			die();
+		}
+
+	}
+
 	public function bottled_beer_shortcode( $atts ) {
 
         ob_start();

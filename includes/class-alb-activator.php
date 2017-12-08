@@ -32,6 +32,38 @@ class Alb_Activator {
 	public static function activate() {
 		flush_rewrite_rules();
 		add_theme_support( 'post-thumbnails' );
+
+		if ( !post_exists( 'taplist' ) ) {
+			$taplist = array(
+		        'post_title' => __( 'Tap List', 'alb' ),
+		        'post_name' => 'taplist',
+		        'post_status' => 'publish',
+		        'post_type' => 'page',
+		        'comment_status' => 'closed',
+		        'ping_status' => 'open'
+		    );
+
+			wp_insert_post( $taplist );
+		}
+
+	}
+
+	/**
+	 *   Determine if a post exists based on post_name and post_type
+	 *
+	 *   @param $post_name string unique post name	
+	 *   @param $post_type string post type (defaults to 'post')
+	 */
+
+	public function post_exists( $post_name ) {
+
+		global $wpdb;
+	    if($wpdb->get_row("SELECT post_name FROM wp_posts WHERE post_name = '" . $post_name . "'", 'ARRAY_A')) {
+	        return true;
+	    } else {
+	        return false;
+	    }
+
 	}
 
 }

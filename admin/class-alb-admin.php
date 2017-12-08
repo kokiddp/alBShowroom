@@ -110,4 +110,566 @@ class Alb_Admin {
 
 	}
 
+	/**
+	 * Add the menu for the admin area.
+	 *
+	 * @since    1.0.0
+	 */
+	public function alb_add_admin_menu(  ) { 
+
+		add_menu_page( 
+			__( 'AlBirrificio Showroom Settings', 'iusetvis' ),
+			__( 'alB Settings', 'iusetvis' ),
+			'edit_pages', 
+			$this->plugin_name . '_options_page',
+			array( $this, 'alb_render_options_page' ),
+			'dashicons-hammer'
+		);		
+
+	}
+
+	/**
+	 * Init the settings fields for the settings admin area.
+	 *
+	 * @since    1.0.0
+	 */
+	public function alb_settings_init(  ) { 
+
+		register_setting( $this->plugin_name . '_options_page', 'alb_settings' );
+
+		add_settings_section(
+			'alb_options_page_section_taplist', 
+			__( 'Taplist Beers', 'alb' ), 
+			array( $this, 'alb_taplist_settings_section_callback' ), 
+			$this->plugin_name . '_options_page'
+		);
+
+		add_settings_field( 
+			'alb_select_tap_1', 
+			__( '#1', 'alb' ), 
+			array( $this, 'alb_select_tap_1_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_2', 
+			__( '#2', 'alb' ), 
+			array( $this, 'alb_select_tap_2_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_3', 
+			__( '#3', 'alb' ), 
+			array( $this, 'alb_select_tap_3_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_4', 
+			__( '#4', 'alb' ), 
+			array( $this, 'alb_select_tap_4_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_5', 
+			__( '#5', 'alb' ), 
+			array( $this, 'alb_select_tap_5_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_6', 
+			__( '#6', 'alb' ), 
+			array( $this, 'alb_select_tap_6_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_7', 
+			__( '#7', 'alb' ), 
+			array( $this, 'alb_select_tap_7_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_8', 
+			__( '#8', 'alb' ), 
+			array( $this, 'alb_select_tap_8_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_9', 
+			__( '#9', 'alb' ), 
+			array( $this, 'alb_select_tap_9_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_10', 
+			__( '#10', 'alb' ), 
+			array( $this, 'alb_select_tap_10_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_P1', 
+			__( '#P1', 'alb' ), 
+			array( $this, 'alb_select_tap_P1_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+		add_settings_field( 
+			'alb_select_tap_P2', 
+			__( '#P2', 'alb' ), 
+			array( $this, 'alb_select_tap_P2_render' ), 
+			$this->plugin_name . '_options_page', 
+			$this->plugin_name . '_options_page_section_taplist' 
+		);
+
+	}
+
+	/**
+	 * Add the #1 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_1_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_1]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_1'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_1'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #2 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_2_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_2]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_2'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_2'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #3 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_3_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_3]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_3'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_3'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #4 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_4_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_4]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_4'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_4'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #5 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_5_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_5]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_5'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_5'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #6 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_6_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_6]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_6'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_6'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #7 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_7_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_7]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_7'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_7'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #8 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_8_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_8]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_8'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_8'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #9 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_9_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_9]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_9'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_9'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #10 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_10_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_10]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_10'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_10'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #P1 selct for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_P1_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_P1]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_P1'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_P1'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the #P2 select for the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_select_tap_P2_render(  ) { 
+
+		$options = get_option( 'alb_settings' );
+		$tap_beers = get_posts([
+		 	'post_type' => 'tap_beer',
+			'post_status' => 'publish',
+		 	'numberposts' => -1,
+			'order'    => 'ASC'
+		]);
+
+		?>
+		<select name='alb_settings[alb_select_tap_P2]'>
+			<?php
+			if ( count( $tap_beers ) > 0 ) {
+				foreach ($tap_beers as $index => $beer) {
+					echo '<option value="' . $beer->ID . '" ' . selected( $options['alb_select_tap_P2'], $beer->ID ) . '>' . $beer->post_title . '</option>';
+				}
+			}
+			else {
+				echo '<option value="0" ' . selected( $options['alb_select_tap_P2'], 0 ) .'>' . __( 'No Tab Beer available', 'alb' ) . '</option>';
+			}
+			?>
+		</select>
+
+	<?php
+
+	}
+
+	/**
+	 * Add the Title for the taplist section of the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_taplist_settings_section_callback(  ) { 
+
+		echo __( 'Tap List', 'alb' );
+
+	}
+
+	/**
+	 * Render the settings area.
+	 *
+	 * @since    1.0.0
+	 */
+	function alb_render_options_page(  ) { 
+
+		?>
+		<form action='options.php' method='post'>
+
+			<h2><?php _e( 'AlBirrificio Showroom Settings', 'iusetvis' ) ?></h2>
+
+			<?php
+			settings_fields( $this->plugin_name . '_options_page' );
+			do_settings_sections( $this->plugin_name . '_options_page' );
+			submit_button();
+			?>
+
+		</form>
+		<?php
+
+	}
+
 }

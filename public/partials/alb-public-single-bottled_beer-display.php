@@ -6,8 +6,8 @@
  * @link       https://github.com/kokiddp/IusEtVis
  * @since      1.0.0
  *
- * @package    Iusetvis
- * @subpackage Iusetvis/public/partials
+* @package    Alb
+ * @subpackage Alb/public
  */
 ?>
 
