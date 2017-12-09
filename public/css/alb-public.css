@@ -1,4 +1,226 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
+.apex{
+  vertical-align: super;
+  font-size: 0.4em;
+}
+.marquee {
+ overflow: hidden;
+ position: relative;
+ margin-right: 20px;
+}
+p {
+  margin: 0;
+  white-space: nowrap;
+  position: absolute;
+}
+.marquee p { 
+ text-align: center;
+ -moz-transform:translateX(100%);
+ -webkit-transform:translateX(100%);	
+ transform:translateX(100%);
+ -moz-animation: scroll-left 5s linear infinite;
+ -webkit-animation: scroll-left 5s linear infinite;
+ animation: scroll-left 5s linear infinite;
+}
+@-moz-keyframes scroll-left {
+ 0%   { -moz-transform: translateX(100%); }
+ 100% { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes scroll-left {
+ 0%   { -webkit-transform: translateX(100%); }
+ 100% { -webkit-transform: translateX(-100%); }
+}
+@keyframes scroll-left {
+ 0%   { 
+ -moz-transform: translateX(100%);
+ -webkit-transform: translateX(100%);
+ transform: translateX(100%); 		
+ }
+ 100% { 
+ -moz-transform: translateX(-100%);
+ -webkit-transform: translateX(-100%); 
+ transform: translateX(-100%); 
+ }
+}
+body {
+  background: #444;
+  font-family: 'Roboto Mono', monospace;
+  color: white;
+}
+.tapentry {
+  display: table;
+  width: 100%;
+  height: 100px;
+}
+.tapentry-row {
+  display: table-row;
+  width: 100%;
+  height: 100%;
+}
+.tap-number {
+  display: table-cell;
+  width: 4.5%;
+  vertical-align: middle;
+  font-size: 2em;
+  padding-bottom: 50px;
+}
+.tap-icon {
+  display: table-cell;
+  width: 4.5%;
+  vertical-align: middle;
+}
+.tap-name {
+  display: table-cell;
+  width: 20%;
+  vertical-align: middle;  
+  font-size: 2.1em;
+  color: #F5E8A1;
+  padding-bottom: 50px;
+}
+.tap-brewery {
+  display: table-cell;
+  width: 19%;
+}
+.tap-subbrewery {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.tap-subbrewery-row1 {
+  display: table-row;
+  width: 100%;
+  height: 50%;
+}
+.tap-subbrewery-row1-cell {
+  display: table-cell;
+  width: 100%;
+  height: 50%;
+}
+.tap-subbrewery-row1-table {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.tap-subbrewery-row1-row {
+  display: table-row;
+  width: 100%;
+  height: 100%;
+  
+}
+.tap-brewery-name {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+  font-size: 1.6em;
+}
+.tap-subbrewery-row2 {
+  display: table-row;
+  width: 100%;
+  height: 50%;
+}
+.tap-subbrewery-row2-cell {
+  display: table-cell;
+  width: 100%;
+  height: 50%;
+}
+.tap-subbrewery-row2-table {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.tap-subbrewery-row2-row {
+  display: table-row;
+  width: 100%;
+  height: 100%;
+}
+.tap-brewery-address {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+}
+.tap-meta {
+  display: table-cell;
+  width: 32%;
+}
+.tap-submeta {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.tap-submeta-row1 {
+  display: table-row;
+  width: 100%;
+  height: 50%;
+}
+.tap-submeta-row1-cell {
+  display: table-cell;
+  width: 100%;
+  height: 50%;
+}
+.tap-submeta-row1-table {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.tap-submeta-row1-row {
+  display: table-row;
+  width: 100%;
+  height: 100%
+}
+.tap-style {
+  display: table-cell;
+  width: 50%;
+  vertical-align: middle;
+  font-size: 1.5em;
+}
+.tap-abv {
+  display: table-cell;
+  width: 25%;
+  vertical-align: middle;
+  font-size: 1.6em;
+}
+.tap-ibu {
+  display: table-cell;
+  width: 25%;
+  vertical-align: middle;
+  font-size: 1.6em;
+}
+.tap-submeta-row2 {
+  display: table-row;
+  width: 100%;
+  height: 50%;
+}
+.tap-submeta-row2-cell {
+  display: table-cell;
+  width: 100%;
+  height: 50%;
+}
+.tap-submeta-row2-table {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.tap-submeta-row2-row {
+  display: table-row;
+  width: 100%;
+  height: 100%
+}
+.tap-description {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+  color: #F5E8A1;
+}
+.tap-prices {
+  display: table-cell;
+  width: 10%;
+  vertical-align: middle;
+  font-size: 1.6em;
+  padding-bottom: 25px;
+}
+.tap-pricem {
+  display: table-cell;
+  width: 10%;
+  vertical-align: middle;
+  font-size: 1.6em;
+  padding-bottom: 25px;
+}

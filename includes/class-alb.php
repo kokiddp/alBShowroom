@@ -212,6 +212,7 @@ class Alb {
 		$this->loader->add_action( 'init', $this, 'register_sandwich_taxonomy_tag', 0 );
 
 		$this->loader->add_action( 'wp', $plugin_public, 'taplist_page' );
+		$this->loader->add_action( 'wp', $plugin_public, 'bottlelist_page' );
 
 	}
 

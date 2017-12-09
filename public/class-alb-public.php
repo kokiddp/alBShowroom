@@ -160,10 +160,25 @@ class Alb_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function taplist_page( $template ) {
+	public function taplist_page() {
 
 	    if(is_page('taplist')){	
 			$page = plugin_dir_path( __FILE__ ) . 'partials/alb-public-taplist-display.php';
+			include($page);
+			die();
+		}
+
+	}
+
+	/**
+	 * Register the Bottled List Page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function bottlelist_page() {
+
+	    if(is_page('bottlelist')){	
+			$page = plugin_dir_path( __FILE__ ) . 'partials/alb-public-bottlelist-display.php';
 			include($page);
 			die();
 		}
