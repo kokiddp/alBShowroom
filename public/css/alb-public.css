@@ -1,6 +1,38 @@
+#header {
+	height: 185px;
+	width: 100%;
+	position: relative;
+}
+#header_taplist_logo {
+	background: url(/wp-content/plugins/alb/public/img/header_taplist.png) top left no-repeat;
+	background-size: 755px 114px;
+	height: 114px;
+	width: 755px;
+	position: absolute;
+	top: 35px;
+	left: 50px;
+}
+#header_bottlelist_logo {
+	background: url(/wp-content/plugins/alb/public/img/header_bottlelist.png) top left no-repeat;
+	background-size: 954px 114px;
+	height: 114px;
+	width: 954px;
+	position: absolute;
+	top: 35px;
+	left: 50px;
+}
+#alb_logo {
+	background: url(/wp-content/plugins/alb/public/img/header_alblogo.png) top left no-repeat;
+	background-size: 600px 108px;
+	height: 108px;
+	width: 600px;
+	position: absolute;
+	top: 35px;
+	right: 50px;
+}
 .apex{
   vertical-align: super;
-  font-size: 0.4em;
+  font-size: 0.5em;
 }
 .marquee {
  overflow: hidden;
@@ -17,9 +49,9 @@ p {
  -moz-transform:translateX(100%);
  -webkit-transform:translateX(100%);	
  transform:translateX(100%);
- -moz-animation: scroll-left 5s linear infinite;
- -webkit-animation: scroll-left 5s linear infinite;
- animation: scroll-left 5s linear infinite;
+ -moz-animation: scroll-left 10s linear infinite;
+ -webkit-animation: scroll-left 10s linear infinite;
+ animation: scroll-left 10s linear infinite;
 }
 @-moz-keyframes scroll-left {
  0%   { -moz-transform: translateX(100%); }
@@ -42,14 +74,17 @@ p {
  }
 }
 body {
-  background: #444;
+  background: url(/wp-content/plugins/alb/public/img/background.jpg);
   font-family: 'Roboto Mono', monospace;
   color: white;
 }
 .tapentry {
   display: table;
   width: 100%;
-  height: 100px;
+  height: 74.5px;
+}
+.tapentry:nth-child(even) {
+  background: black;
 }
 .tapentry-row {
   display: table-row;
@@ -75,6 +110,8 @@ body {
   font-size: 2.1em;
   color: #F5E8A1;
   padding-bottom: 50px;
+  position: relative;
+  top: 5px;
 }
 .tap-brewery {
   display: table-cell;
@@ -111,6 +148,8 @@ body {
   width: 100%;
   vertical-align: middle;
   font-size: 1.6em;
+  position: relative;
+  top: -7px;
 }
 .tap-subbrewery-row2 {
   display: table-row;
@@ -136,6 +175,8 @@ body {
   display: table-cell;
   width: 100%;
   vertical-align: middle;
+  position: relative;
+  top: -8px;
 }
 .tap-meta {
   display: table-cell;
@@ -171,18 +212,24 @@ body {
   width: 50%;
   vertical-align: middle;
   font-size: 1.5em;
+  position: relative;
+  top: -7px;
 }
 .tap-abv {
   display: table-cell;
   width: 25%;
   vertical-align: middle;
   font-size: 1.6em;
+  position: relative;
+  top: -7px;
 }
 .tap-ibu {
   display: table-cell;
   width: 25%;
   vertical-align: middle;
   font-size: 1.6em;
+  position: relative;
+  top: -7px;
 }
 .tap-submeta-row2 {
   display: table-row;
@@ -209,6 +256,8 @@ body {
   width: 100%;
   vertical-align: middle;
   color: #F5E8A1;
+  position: relative;
+  top: -8px;
 }
 .tap-prices {
   display: table-cell;
@@ -216,6 +265,8 @@ body {
   vertical-align: middle;
   font-size: 1.6em;
   padding-bottom: 25px;
+  position: relative;
+  left: 40px;
 }
 .tap-pricem {
   display: table-cell;
@@ -223,4 +274,115 @@ body {
   vertical-align: middle;
   font-size: 1.6em;
   padding-bottom: 25px;
+  position: relative;
+  left: 20px;
+}
+#sandwich_left {
+	width: 50%;
+	height: 100%;
+	background: white;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	color: black;
+}
+#sandwich_right {
+	width: 50%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	color: white;
+}
+.sandwich_title {
+	position: absolute;
+    top: 30px;
+    width: 800px;
+    left: calc(50% - 400px);
+    text-align: center;
+    font-size: 46px;
+}
+.sandwich_tag {
+	position: absolute;
+    top: 100px;
+    width: 800px;
+    left: calc(50% - 400px);
+    text-align: center;
+    font-size: 40px;
+}
+.sandwich_category {
+    position: absolute;
+    top: 150px;
+    width: 800px;
+    left: calc(50% - 400px);
+    text-align: center;
+    font-size: 40px;
+}
+.sandwich_content {
+	position: absolute;
+	top: 275px;
+    width: 800px;
+    height: 80px;
+    left: calc(50% - 400px);
+    text-align: left;
+    font-size: 24px;
+}
+.sandwich_image {
+	position: absolute;
+	top: 350px;
+	left: calc(50% - 325px);
+}
+.sandwich_image > img {
+
+}
+#alb_sandwich_logo {
+	background: url(/wp-content/plugins/alb/public/img/header_alblogo.png) top left no-repeat;
+	background-size: 300px 54px;
+	height: 54px;
+	width: 300px;
+	position: absolute;
+	bottom: 50px;
+	right: calc(50% - 150px);
+	filter: invert(100%);
+}
+.sandwich_ingredients_header {
+	color: rgb(249, 247, 192);
+	position: absolute;
+    width: 400px;
+    text-align: center;
+    left: calc(50% - 200px);
+    top: 200px;
+    font-size: 46px;
+}
+.sandwich_ingredients_list {
+    list-style: none;
+    position: absolute;
+    top: 300px;
+    width: 600px;
+    left: calc(50% - 300px);
+    font-size: 40px;
+}
+.sandwich_ingredient_1 {
+
+}
+.sandwich_ingredient_2 {
+	
+}
+.sandwich_ingredient_3 {
+	
+}
+.sandwich_ingredient_4 {
+	
+}
+.sandwich_ingredient_5 {
+	
+}
+.sandwich_price {
+	color: rgb(249, 247, 192);
+	list-style: none;
+    position: absolute;
+    bottom: 400px;
+    width: 400px;
+    left: calc(50% - 200px);
+    font-size: 40px;
 }

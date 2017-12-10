@@ -29,18 +29,25 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
   <link rel="stylesheet" href="<?= $url . 'css/alb-public.css' ?>">
 
   <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
+  	src="https://code.jquery.com/jquery-3.2.1.min.js"
+  	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  	crossorigin="anonymous"></script>
   <script
-  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-  crossorigin="anonymous"></script>
+  	src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  	integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  	crossorigin="anonymous"></script>
+  <script 
+  	src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.Marquee/1.5.0/jquery.marquee.min.js" 
+  	integrity="sha256-I7mznqYTCAUiVrmSG/HA3maYvPDATj5PKXityGFo/24=" 
+  	crossorigin="anonymous"></script>
   <script src="<?= $url . 'js/alb-public.js' ?>"></script>
 </head>
-<boby>
+<body>
 
-<!--header-->
+<div id="header">
+	<div id="header_taplist_logo"></div>
+	<div id="alb_logo"></div>
+</div>
 
 <?php
 
@@ -63,11 +70,14 @@ if ( count( $tap_beers ) > 0 ) {
 		$meta = get_post_meta( $beer->ID );
 		$categories = get_the_terms( $beer->ID, 'beer_category' );
 		$beer_name = ! isset( $beer->post_title ) ? '' : $beer->post_title;
-		$beer_brew_name = ! isset( $meta['beer_brew_name'][0] ) ? '' : $meta['beer_brew_name'][0];
-		$beer_brew_add = ! isset( $meta['beer_brew_add'][0] ) ? '' : $meta['beer_brew_add'][0];
 		$beer_category = count( $categories ) == 0 ? '' : $categories[0]->name;
+
+		$beer_brew_name = ! isset( $meta['beer_brew_name'][0] ) ? '' : $meta['beer_brew_name'][0];
+		$beer_brew_add = ! isset( $meta['beer_brew_add'][0] ) ? '' : $meta['beer_brew_add'][0];		
+
 		$beer_abv = ! isset( $meta['beer_abv'][0] ) ? '' : $meta['beer_abv'][0];
 		$beer_ibu = ! isset( $meta['beer_ibu'][0] ) ? '' : $meta['beer_ibu'][0];
+
 		$beer_og = ! isset( $meta['beer_og'][0] ) ? '' : $meta['beer_og'][0];
 		$beer_fg = ! isset( $meta['beer_fg'][0] ) ? '' : $meta['beer_fg'][0];
 		$beer_color = ! isset( $meta['beer_color'][0] ) ? '' : $meta['beer_color'][0];
@@ -77,6 +87,7 @@ if ( count( $tap_beers ) > 0 ) {
 		$beer_plato = ! isset( $meta['beer_plato'][0] ) ? '' : $meta['beer_plato'][0];
 		$beer_servt = ! isset( $meta['beer_servt'][0] ) ? '' : $meta['beer_servt'][0];
 		$beer_pair = ! isset( $meta['beer_pair'][0] ) ? '' : $meta['beer_pair'][0];
+
 		$beer_sizes = ! isset( $meta['beer_sizes'][0] ) ? '' : $meta['beer_sizes'][0];
 		$beer_prices = ! isset( $meta['beer_prices'][0] ) ? '' : $meta['beer_prices'][0];
 		$beer_sizem = ! isset( $meta['beer_sizem'][0] ) ? '' : $meta['beer_sizem'][0];
@@ -103,7 +114,7 @@ if ( count( $tap_beers ) > 0 ) {
 		      		</p>      
 		    	</div>
 		    	<div class="tap-icon">
-		      		<?= get_the_post_thumbnail( $beer->ID, 'thumbnail' ); ?>
+		      		<?= get_the_post_thumbnail( $beer->ID, array(60,60) ); ?>
 		    	</div>
 		    	<div class="tap-name">
 		      		<p>
@@ -197,5 +208,5 @@ if ( count( $tap_beers ) > 0 ) {
 }
 
 ?>
-</boby>
+</body>
 </html>
