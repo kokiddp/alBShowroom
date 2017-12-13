@@ -307,7 +307,7 @@ class Alb {
 			'capability_type' => 'post',
 			'rewrite'         => array( 'slug' => __( 'bottled_beer', 'alb' ) ), // Permalinks format
 			'menu_position'   => 30,
-			'menu_icon'       => 'dashicons-carrot',
+			'menu_icon'       => plugin_dir_url( __FILE__ ) . 'img/bottled_beer.png'
 		);
 
 		//filter for altering the args
@@ -351,7 +351,7 @@ class Alb {
 			'capability_type' => 'post',
 			'rewrite'         => array( 'slug' => __( 'tap_beer', 'alb' ) ), // Permalinks format
 			'menu_position'   => 30,
-			'menu_icon'       => 'dashicons-palmtree',
+			'menu_icon'       => plugin_dir_url( __FILE__ ) . 'img/tap_beer.png'
 		);
 
 		//filter for altering the args
@@ -395,7 +395,7 @@ class Alb {
 			'capability_type' => 'post',
 			'rewrite'         => array( 'slug' => __( 'sandwich', 'alb' ) ), // Permalinks format
 			'menu_position'   => 30,
-			'menu_icon'       => 'dashicons-heart',
+			'menu_icon'       => plugin_dir_url( __FILE__ ) . 'img/sandwich.png'
 		);
 
 		//filter for altering the args
