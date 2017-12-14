@@ -56,7 +56,7 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
         <?php }?>
 
         <?php $categories = get_the_terms(get_the_ID(), 'sandwich_category'); 
-        if ( count( $categories ) > 0 ) {
+        if ( $categories && count( $categories ) > 0 ) {
 
             foreach ($categories as $category) { ?>
                 <h3 class="sandwich_category"><?php echo esc_html( $category->name ); ?></h3>
