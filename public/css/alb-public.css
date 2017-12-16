@@ -46,7 +46,7 @@
  position: relative;
  margin-right: 20px;
 }
-p {
+.tapentry p {
   margin: 0;
   white-space: nowrap;
   position: absolute;
@@ -55,7 +55,6 @@ body {
   background: url(/wp-content/plugins/alb/public/img/background.jpg);
   font-family: 'Roboto Mono', monospace;
   color: white;
-  line-height: 50%;
 }
 .tapentry {
   display: table;
@@ -75,6 +74,7 @@ body {
   width: 4.5%;
   vertical-align: middle;
   font-size: 2em;
+  line-height: 50%;
   padding-bottom: 50px;
   position: relative;
   top: 18px;
@@ -90,6 +90,7 @@ body {
   width: 20%;
   vertical-align: middle;  
   font-size: 2.1em;
+  line-height: 50%;
   color: #F5E8A1;
   padding-bottom: 50px;
   position: relative;
@@ -129,6 +130,7 @@ body {
   width: 100%;
   vertical-align: middle;
   font-size: 1.6em;
+  line-height: 50%;
   position: relative;
   top: -7px;
   line-height: 50%;
@@ -193,6 +195,7 @@ body {
   width: 50%;
   vertical-align: middle;
   font-size: 1.5em;
+  line-height: 50%;
   position: relative;
   top: -7px;
 }
@@ -201,6 +204,7 @@ body {
   width: 25%;
   vertical-align: middle;
   font-size: 1.6em;
+  line-height: 50%;
   position: relative;
   top: -7px;
 }
@@ -209,6 +213,7 @@ body {
   width: 25%;
   vertical-align: middle;
   font-size: 1.6em;
+  line-height: 50%;
   position: relative;
   top: -7px;
 }
@@ -245,6 +250,7 @@ body {
   width: 10%;
   vertical-align: middle;
   font-size: 1.6em;
+  line-height: 50%;
   padding-bottom: 25px;
   position: relative;
   left: 40px;
@@ -254,6 +260,7 @@ body {
   width: 10%;
   vertical-align: middle;
   font-size: 1.6em;
+  line-height: 50%;
   padding-bottom: 25px;
   position: relative;
   left: 20px;
