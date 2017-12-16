@@ -166,7 +166,10 @@ class Alb {
 		$this->loader->add_action( 'save_post', $this, 'save_beer_meta_boxes', 10, 2 );
 
 		$this->loader->add_action( 'add_meta_boxes', $this, 'add_sandwich_meta_boxes' );
-		$this->loader->add_action( 'save_post', $this, 'save_sandwich_meta_boxes', 10, 2 );		
+		$this->loader->add_action( 'save_post', $this, 'save_sandwich_meta_boxes', 10, 2 );
+
+		$this->loader->add_action( 'add_meta_boxes', $this, 'add_event_meta_boxes' );
+		$this->loader->add_action( 'save_post', $this, 'save_event_meta_boxes', 10, 2 );	
 
 	}
 
@@ -211,8 +214,13 @@ class Alb {
 		$this->loader->add_action( 'init', $this, 'register_sandwich_taxonomy_category', 0 );
 		$this->loader->add_action( 'init', $this, 'register_sandwich_taxonomy_tag', 0 );
 
+		$this->loader->add_action( 'init', $this, 'register_event_post_type', 0 );
+		$this->loader->add_action( 'init', $this, 'register_event_taxonomy_category', 0 );
+		$this->loader->add_action( 'init', $this, 'register_event_taxonomy_tag', 0 );
+
 		$this->loader->add_action( 'wp', $plugin_public, 'taplist_page' );
 		$this->loader->add_action( 'wp', $plugin_public, 'bottlelist_page' );
+		$this->loader->add_action( 'wp', $plugin_public, 'events_page' );
 
 	}
 
@@ -574,6 +582,136 @@ class Alb {
 		$args = apply_filters( 'sandwich_tag_taxonomy_args', $args );
 
 		register_taxonomy( 'sandwich_tag',  array( 'sandwich' ), $args );
+	}
+
+	/**
+	 * Register the Event custom post type.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/register_post_type
+	 */
+	public function register_event_post_type() {
+		$labels = array(
+			'name'               => __( 'Events', 'alb' ),
+			'singular_name'      => __( 'Event', 'alb' ),
+			'add_new'            => __( 'Add Event', 'alb' ),
+			'add_new_item'       => __( 'Add Event', 'alb' ),
+			'edit_item'          => __( 'Edit Event', 'alb' ),
+			'new_item'           => __( 'New Event', 'alb' ),
+			'view_item'          => __( 'View Event', 'alb' ),
+			'search_items'       => __( 'Search Event', 'alb' ),
+			'not_found'          => __( 'No Event found', 'alb' ),
+			'not_found_in_trash' => __( 'No Event in the trash', 'alb' ),
+		);
+
+		$supports = array(
+			'title',
+			'editor',
+			'thumbnail',
+			'revisions',
+			'tags',
+			'excerpt'
+		);
+
+		$args = array(
+			'labels'          => $labels,
+			'supports'        => $supports,
+			'public'          => true,
+			'capability_type' => 'post',
+			'rewrite'         => array( 'slug' => __( 'event', 'alb' ) ), // Permalinks format
+			'menu_position'   => 30,
+			'menu_icon'       => 'dashicons-calendar-alt'
+		);
+
+		//filter for altering the args
+		$args = apply_filters( 'event_post_type_args', $args );
+
+		register_post_type( 'event', $args );
+	}
+
+	/**
+	 * Register a taxonomy for Event Categories.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/register_taxonomy
+	 */
+	public function register_event_taxonomy_category() {
+		$labels = array(
+			'name'                       => __( 'Event Categories', 'alb' ),
+			'singular_name'              => __( 'Event Category', 'alb' ),
+			'menu_name'                  => __( 'Event Categories', 'alb' ),
+			'edit_item'                  => __( 'Edit Event Category', 'alb' ),
+			'update_item'                => __( 'Update Event Category', 'alb' ),
+			'add_new_item'               => __( 'Add New Event Category', 'alb' ),
+			'new_item_name'              => __( 'New Event Category Name', 'alb' ),
+			'parent_item'                => __( 'Parent Event Category', 'alb' ),
+			'parent_item_colon'          => __( 'Parent Event Category:', 'alb' ),
+			'all_items'                  => __( 'All Event Categories', 'alb' ),
+			'search_items'               => __( 'Search Event Categories', 'alb' ),
+			'popular_items'              => __( 'Popular Event Categories', 'alb' ),
+			'separate_items_with_commas' => __( 'Separate Event categories with commas', 'alb' ),
+			'add_or_remove_items'        => __( 'Add or remove Event categories', 'alb' ),
+			'choose_from_most_used'      => __( 'Choose from the most used Event categories', 'alb' ),
+			'not_found'                  => __( 'No Event categories found.', 'alb' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'public'            => true,
+			'show_in_nav_menus' => true,
+			'show_ui'           => true,
+			'show_tagcloud'     => true,
+			'hierarchical'      => true,
+			'rewrite'           => array( 'slug' => __('event_category', 'alb') ),
+			'show_admin_column' => true,
+			'query_var'         => true,
+		);
+
+		//filter for altering the args
+		$args = apply_filters( 'event_category_taxonomy_args', $args );
+
+		register_taxonomy( 'event_category',  array( 'event' ), $args );
+	}
+
+	/**
+	 * Register a taxonomy for Event Tags.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/register_taxonomy
+	 */
+	public function register_event_taxonomy_tag() {
+		$labels = array(
+			'name'                       => __( 'Event Tags', 'alb' ),
+			'singular_name'              => __( 'Event Tag', 'alb' ),
+			'menu_name'                  => __( 'Event Tags', 'alb' ),
+			'edit_item'                  => __( 'Edit Event Tag', 'alb' ),
+			'update_item'                => __( 'Update Event Tag', 'alb' ),
+			'add_new_item'               => __( 'Add New Event Tag', 'alb' ),
+			'new_item_name'              => __( 'New Event Tag Name', 'alb' ),
+			'parent_item'                => null,
+			'parent_item_colon'          => null,
+			'all_items'                  => __( 'All Event Tags', 'alb' ),
+			'search_items'               => __( 'Search Event Tag', 'alb' ),
+			'popular_items'              => __( 'Popular Event Tag', 'alb' ),
+			'separate_items_with_commas' => __( 'Separate Event Tags with commas', 'alb' ),
+			'add_or_remove_items'        => __( 'Add or remove Event Tags', 'alb' ),
+			'choose_from_most_used'      => __( 'Choose from the most used Event Tags', 'alb' ),
+			'not_found'                  => __( 'No Event Tag found.', 'alb' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'public'            => true,
+			'show_in_nav_menus' => true,
+			'show_ui'           => true,
+			'show_tagcloud'     => true,
+			'hierarchical'      => false,
+			'rewrite'           => array( 'slug' => __('event', 'alb') ),
+			'show_admin_column' => true,
+			'query_var'         => true,
+		);
+
+		//filter for altering the args
+		$args = apply_filters( 'event_tag_taxonomy_args', $args );
+
+		register_taxonomy( 'event_tag',  array( 'event' ), $args );
 	}
 
 	/**
@@ -1018,6 +1156,128 @@ class Alb {
 		$meta['sandwich_ingredient_5'] = ( isset( $_POST['sandwich_ingredient_5'] ) ? esc_textarea( $_POST['sandwich_ingredient_5'] ) : '' );
 		$meta['sandwich_price'] = ( isset( $_POST['sandwich_price'] ) ? esc_textarea( $_POST['sandwich_price'] ) : '' );
 		
+		foreach ( $meta as $key => $value ) {
+			update_post_meta( $post->ID, $key, $value );
+		}
+	}
+
+	/**
+	 * Register the metaboxes to be used for the event post type
+	 *
+	 */
+	public function add_event_meta_boxes() {
+		add_meta_box(
+			'time_fields',
+			__( 'Event description', 'iusetvis' ),
+			array( $this, 'render_event_meta_boxes' ),
+			'event',
+			'normal',
+			'high'
+		);
+	}
+
+   /**
+	* The HTML for the time fields
+	*/
+	function render_event_meta_boxes( $post ) {
+
+		$meta = get_post_custom( $post->ID );
+		$event_start_display = ! isset( $meta['event_start_display'][0] ) ? '' : $meta['event_start_display'][0];
+		$event_end_display = ! isset( $meta['event_end_display'][0] ) ? '' : $meta['event_end_display'][0];
+		$event_start_date = ! isset( $meta['event_start_date'][0] ) ? '' : $meta['event_start_date'][0];
+		$event_end_date = ! isset( $meta['event_end_date'][0] ) ? '' : $meta['event_end_date'][0];
+
+		wp_nonce_field( basename( __FILE__ ), 'event_fields' ); ?>
+
+		<table class="form-table">
+
+			<tr>
+				<td class="event_sc" colspan="1">
+					<label for="event_sc" style="font-weight: bold;"><?php _e( 'Event Shortcode', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<code class="event_sc">[<?php echo get_post_type( $post->ID ); ?> id="<?php echo $post->ID; ?>"]</code>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="event_meta_box_td" colspan="1">
+					<label for="event_start_display" style="font-weight: bold;"><?php _e( 'Start Display Date', 'iusetvis' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="date" name="event_start_display" class="regular-text" value="<?php echo date( 'Y-m-d', $event_start_display ); ?>">
+				</td>
+			</tr>
+
+			<tr>
+				<td class="event_meta_box_td" colspan="1">
+					<label for="event_end_display" style="font-weight: bold;"><?php _e( 'End Display Date', 'iusetvis' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="date" name="event_end_display" class="regular-text" value="<?php echo date( 'Y-m-d', $event_end_display ); ?>">
+				</td>
+			</tr>
+
+			<tr>
+				<td class="event_meta_box_td" colspan="1">
+					<label for="event_start_date" style="font-weight: bold;"><?php _e( 'Event Start Date', 'iusetvis' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="date" name="event_start_date" class="regular-text" value="<?php echo date( 'Y-m-d', $event_start_date ); ?>">
+				</td>
+			</tr>
+
+			<tr>
+				<td class="event_meta_box_td" colspan="1">
+					<label for="event_end_date" style="font-weight: bold;"><?php _e( 'Event End Date', 'iusetvis' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="date" name="event_end_date" class="regular-text" value="<?php echo date( 'Y-m-d', $event_end_date ); ?>">
+				</td>
+			</tr>
+
+		</table>
+
+	<?php }
+
+   /**
+	* Save time metaboxes
+	*
+	*/
+	function save_event_meta_boxes( $post_id ) {
+
+		global $post;
+
+		// Verify nonce
+		if ( !isset( $_POST['event_fields'] ) || !wp_verify_nonce( $_POST['event_fields'], basename(__FILE__) ) ) {
+			return $post_id;
+		}
+
+		// Check Autosave
+		if ( (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) || ( defined('DOING_AJAX') && DOING_AJAX) || isset($_REQUEST['bulk_edit']) ) {
+			return $post_id;
+		}
+
+		// Don't save if only a revision
+		if ( isset( $post->post_type ) && $post->post_type == 'revision' ) {
+			return $post_id;
+		}
+
+		// Check permissions
+		if ( !current_user_can( 'edit_post', $post->ID ) ) {
+			return $post_id;
+		}
+
+		$meta['event_start_display'] = ( isset( $_POST['event_start_display'] ) ? strtotime( esc_textarea( $_POST['event_start_display'] ) ) : '' );
+		$meta['event_end_display'] = ( isset( $_POST['event_end_display'] ) ? strtotime( esc_textarea( $_POST['event_end_display'] ) ) : '' );
+		$meta['event_start_date'] = ( isset( $_POST['event_start_date'] ) ? strtotime( esc_textarea( $_POST['event_start_date'] ) ) : '' );
+		$meta['event_end_date'] = ( isset( $_POST['event_end_date'] ) ? strtotime( esc_textarea( $_POST['event_end_date'] ) ) : '' );
+
 		foreach ( $meta as $key => $value ) {
 			update_post_meta( $post->ID, $key, $value );
 		}

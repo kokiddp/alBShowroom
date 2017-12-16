@@ -110,6 +110,7 @@ class Alb_Public {
 		add_shortcode( 'bottled_beer', array( $this, 'bottled_beer_shortcode' ) );
 		add_shortcode( 'tap_beer', array( $this, 'tap_beer_shortcode' ) );
 		add_shortcode( 'sandwich', array( $this, 'sandwich_shortcode' ) );
+		add_shortcode( 'event', array( $this, 'event_shortcode' ) );
 
 	}
 
@@ -185,6 +186,21 @@ class Alb_Public {
 
 	}
 
+	/**
+	 * Register the Bottled List Page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function events_page() {
+
+	    if(is_page('events')){	
+			$page = plugin_dir_path( __FILE__ ) . 'partials/alb-public-events-display.php';
+			include($page);
+			die();
+		}
+
+	}
+
 	public function bottled_beer_shortcode( $atts ) {
 
         ob_start();
@@ -233,7 +249,7 @@ class Alb_Public {
                 <?php }?>
 
 	            <?php $categories = get_the_terms(get_the_ID(), 'beer_category'); 
-                if ( count( $categories ) > 0 ) {
+                if ( $categories && count( $categories ) > 0 ) {
 
                     foreach ($categories as $category) { ?>
                         <h3><?php echo esc_html( $category->name ); ?></h3>
@@ -310,7 +326,7 @@ class Alb_Public {
 
 	            <?php $categories = get_the_terms(get_the_ID(), 'beer_category');
  
-                if ( count( $categories ) > 0 ) { 
+                if ( $categories && count( $categories ) > 0 ) { 
                     foreach ($categories as $category) { ?>
                         <?php echo esc_html( $category->name ); ?>
                     <?php }?>
@@ -386,7 +402,7 @@ class Alb_Public {
 	                <?php }?>
 
 	                <?php $categories = get_the_terms(get_the_ID(), 'sandwich_category');
-	                if ( count( $categories ) > 0 ) {
+	                if ( $categories && count( $categories ) > 0 ) {
 	                    foreach ($categories as $category) { ?>
 	                        <h3><?php echo esc_html( $category->name ); ?></h3>
 	                    <?php }?>
@@ -511,6 +527,129 @@ class Alb_Public {
     	<?php $sandwich = ob_get_clean();
 
     	return $sandwich;
+
+    	}
+
+    }
+
+    public function event_shortcode( $atts ) {
+
+        ob_start();
+
+        /**
+        * Define attributes defaults
+        *
+        */
+        extract( shortcode_atts( array ( 'id' => '' ), $atts ) );
+
+        /**
+        * Define WP_Query parameters based on shortcode_atts
+        *
+        */
+        $args = array(
+            'post_type'      => 'event',
+            'page_id'        => $id
+        );
+
+        /**
+        * Check if the user wants to display by category/term and
+        * if so, get the custom posts term/category
+        *
+        */
+        $query = new WP_Query( $args );
+
+        /**
+        * Run the loop based on the parameters
+        *
+        */
+        if ( $query->have_posts() ) { 
+
+        ?>
+
+            <?php while ( $query->have_posts() ) : $query->the_post(); ?>
+
+				<div class="post-content-inner-wrap event_post_list entry-content">
+
+	                <?php the_title( '<h2 class="event-title">', '</h2>' ); ?>
+
+	                <?php $taxonomies = get_the_terms(get_the_ID(), 'event_tag'); 
+	                if ( $taxonomies && count( $taxonomies ) > 0 ) {
+	                    foreach ($taxonomies as $taxonomy) { ?>
+	                        <h2><?php echo esc_html( $taxonomy->name ); ?></h2>
+	                    <?php }?>
+
+	                <?php }?>
+
+	                <?php $categories = get_the_terms(get_the_ID(), 'event_category');
+	                if ( $categories && count( $categories ) > 0 ) {
+	                    foreach ($categories as $category) { ?>
+	                        <h3><?php echo esc_html( $category->name ); ?></h3>
+	                    <?php }?>
+
+	                <?php }?>
+
+	                <?php if ( has_post_thumbnail() ) { ?>
+
+		                <div class="event_image_wrap">	                    
+		                    <div class="event_image">
+		                        <?php echo get_the_post_thumbnail( get_the_ID(), 'medium' ); ?>
+		                    </div><!-- .event_image -->	                    
+		                </div><!-- .event_image_wrap -->
+
+	                <?php } // end featured image check ?>
+
+	                <div class="event_profile_wrap">
+
+						<div class="event_post_content">
+
+	                        <?php the_content(); ?>
+
+	                    </div><!-- .event_post_content -->
+
+	                    <div class="event_profile">
+	                        <ul>
+
+	                            <?php // Start date
+	                               $event_start_date = get_post_meta( get_the_ID(), 'event_start_date', true );
+	                               if ( !empty( $event_start_date ) ) {
+	                            ?>
+	                                <li class="event_start_date">
+	                                    <span class="event_profile_heading"><?php _e('Start date: ','iusetvis'); ?></span>
+	                                    <span class="event_profile_meta">
+	                                        <?php 
+	                                            echo date_i18n( get_option( 'date_format' ) , $event_start_date );
+	                                        ?>
+	                                    </span>
+	                                </li>
+	                            <?php } ?>
+
+	                            <?php // End date
+	                               $event_end_date = get_post_meta( get_the_ID(), 'event_end_date', true );
+	                               if ( !empty( $event_end_date ) ) {
+	                            ?>
+	                                <li class="event_end_date">
+	                                    <span class="event_profile_heading"><?php _e('End date: ','iusetvis'); ?></span>
+	                                    <span class="event_profile_meta">
+	                                        <?php 
+	                                            echo date_i18n( get_option( 'date_format' ) , $event_end_date );
+	                                        ?>
+	                                    </span>
+	                                </li>
+	                            <?php } ?>
+
+	                        </ul>
+	                    </div><!-- .event_profile -->
+
+	                </div><!-- .event_profile_wrap -->
+
+	            </div><!-- .post-content-inner-wrap .event_post_list .entry-content -->
+
+            <?php endwhile;
+        wp_reset_postdata(); ?>
+
+    	<?php $event = ob_get_clean();
+
+    	return $event;
 
     	}
 

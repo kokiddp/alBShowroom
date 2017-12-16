@@ -59,6 +59,19 @@ class Alb_Activator {
 			wp_insert_post( $bottlelist );
 		}
 
+		if ( !post_exists( 'events' ) ) {
+			$events = array(
+		        'post_title' => __( 'Events', 'alb' ),
+		        'post_name' => 'events',
+		        'post_status' => 'publish',
+		        'post_type' => 'page',
+		        'comment_status' => 'closed',
+		        'ping_status' => 'open'
+		    );
+
+			wp_insert_post( $events );
+		}
+
 	}
 
 	/**
