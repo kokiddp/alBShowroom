@@ -65,6 +65,7 @@ $tap_beers = get_posts([
 if ( count( $tap_beers ) > 0 ) {
 	foreach ($tap_beers as $index => $beer) {
 		$meta = get_post_meta( $beer->ID );
+		$content = get_post_field( 'post_content', $beer->ID );
 		$categories = get_the_terms( $beer->ID, 'beer_category' );
 		$beer_name = ! isset( $beer->post_title ) ? '' : $beer->post_title;
 		$beer_category = count( $categories ) == 0 ? '' : $categories[0]->name;
@@ -86,15 +87,16 @@ if ( count( $tap_beers ) > 0 ) {
 		$beer_pair = ! isset( $meta['beer_pair'][0] ) ? '' : $meta['beer_pair'][0];
 
 		$beer_description = 
-			( empty( $beer_og ) ? '' : ( __('Original gravity: ', 'alb') . $beer_og . ' - ' ) ) .
-			( empty( $beer_fg ) ? '' : ( __('Final gravity: ', 'alb') . $beer_fg . ' - ' ) ) .
-			( empty( $beer_color ) ? '' : ( __('Color: ', 'alb') . $beer_color . ' - ' ) ) .
-			( empty( $beer_grains ) ? '' : ( __('Grains: ', 'alb') . $beer_grains . ' - ' ) ) .
-			( empty( $beer_yeast ) ? '' : ( __('Yeast: ', 'alb') . $beer_yeast . ' - '  ) ) .
-			( empty( $beer_hops ) ? '' : ( __('Hops: ', 'alb') . $beer_hops . ' - ' ) ) .
-			( empty( $beer_plato ) ? '' : ( __('Plato degrees: ', 'alb') . $beer_plato . ' - ' ) ) .
-			( empty( $beer_servt ) ? '' : ( __('Serving temperature: ', 'alb') . $beer_servt . ' - ' )  ).
-			( empty( $beer_pair ) ? '' : ( __('Pairings: ', 'alb') . $beer_pair ) );
+			( empty( $beer_og ) ? '' : ( __('Original gravity: ', 'alb') . $beer_og . ( empty( $beer_fg ) && empty( $beer_color ) && empty( $beer_grains ) && empty( $beer_yeast ) && empty( $beer_hops ) && empty( $beer_plato ) && empty( $beer_servt ) && empty( $beer_pair ) &&  empty( $content ) ? '' : ' - ' ) ) ) .
+			( empty( $beer_fg ) ? '' : ( __('Final gravity: ', 'alb') . $beer_fg . ( empty( $beer_color ) && empty( $beer_grains ) && empty( $beer_yeast ) && empty( $beer_hops ) && empty( $beer_plato ) && empty( $beer_servt ) && empty( $beer_pair ) &&  empty( $content ) ? '' : ' - ' ) ) ) .
+			( empty( $beer_color ) ? '' : ( __('Color: ', 'alb') . $beer_color . ( empty( $beer_grains ) && empty( $beer_yeast ) && empty( $beer_hops ) && empty( $beer_plato ) && empty( $beer_servt ) && empty( $beer_pair ) &&  empty( $content ) ? '' : ' - ' ) ) ) .
+			( empty( $beer_grains ) ? '' : ( __('Grains: ', 'alb') . $beer_grains . ( empty( $beer_yeast ) && empty( $beer_hops ) && empty( $beer_plato ) && empty( $beer_servt ) && empty( $beer_pair ) &&  empty( $content ) ? '' : ' - ' ) ) ) .
+			( empty( $beer_yeast ) ? '' : ( __('Yeast: ', 'alb') . $beer_yeast . ( empty( $beer_hops ) && empty( $beer_plato ) && empty( $beer_servt ) && empty( $beer_pair ) &&  empty( $content ) ? '' : ' - ' ) ) ) .
+			( empty( $beer_hops ) ? '' : ( __('Hops: ', 'alb') . $beer_hops . ( empty( $beer_plato ) && empty( $beer_servt ) && empty( $beer_pair ) &&  empty( $content ) ? '' : ' - ' ) ) ) .
+			( empty( $beer_plato ) ? '' : ( __('Plato degrees: ', 'alb') . $beer_plato . ( empty( $beer_servt ) && empty( $beer_pair ) &&  empty( $content ) ? '' : ' - ' ) ) ) .
+			( empty( $beer_servt ) ? '' : ( __('Serving temperature: ', 'alb') . $beer_servt . ( empty( $beer_pair ) &&  empty( $content ) ? '' : ' - ' ) ) ) .
+			( empty( $beer_pair ) ? '' : ( __('Pairings: ', 'alb') . $beer_pair . ( empty( $content ) ? '' : ' - ' ) ) ) .
+			( empty( $content ) ? '' : $content );
 
 		$beer_sizes = ! isset( $meta['beer_sizes'][0] ) ? '' : $meta['beer_sizes'][0];
 		$beer_prices = ! isset( $meta['beer_prices'][0] ) ? '' : $meta['beer_prices'][0];
