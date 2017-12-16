@@ -30,34 +30,27 @@
 	 */
 
 
-	var name_div = jQuery('.tap-name');
-	var name_p = jQuery('.tap-name > p');
-	var brewery_div = jQuery('.tap-brewery-name');
-	var brewery_p = jQuery('.tap-brewery-name > p');
-	var address_div = jQuery('.tap-brewery-address');
-	var address_p = jQuery('.tap-brewery-address > p');
-	var style_div = jQuery('.tap-style');
-	var style_p = jQuery('.tap-style > p');
-	var description_div = jQuery('.tap-description');
-	var description_p = jQuery('.tap-description > p');
+	$(document).ready(function() {
+		var supportedFlag = $.keyframe.isSupported();
 
-	console.log(description_p.text().length);
-	console.log(description_div.width());
+		var scrolling_p = $(".marquee > p");
 
-	if (name_p.text().length / name_div.width() > 0.25 ) {
-		name_div.addClass('marquee');
-	}
-	if (brewery_p.text().length / brewery_div.width() > 0.25 ) {
-		brewery_div.addClass('marquee');
-	}
-	if (address_p.text().length / address_div.width() > 0.25 ) {
-	    address_div.addClass('marquee');
-	}
-	if (style_p.text().length / style_div.width() > 0.25 ) {
-	    style_div.addClass('marquee');
-	}
-	if (description_p.text().length / description_div.width() > 0.25 ) {
-	    description_div.addClass('marquee');
-	}
+		$.each(scrolling_p, function(index, value) {
+
+			if ($(this).outerWidth(true) > $(this).parent().outerWidth(true)) {
+
+				var start = 100 / $(this).outerWidth(true) * $(this).parent().outerWidth(true);
+				var speed = $(this).outerWidth(true) / $(this).parent().outerWidth(true) * 7;
+				$.keyframe.define([{
+				    name: 'albmarquee-' + index,
+				    '0%': {'transform': 'translate3d(' + start + '%, 0, 0)'},
+				    '100%': {'transform': 'translate3d(-100%, 0, 0)'}
+				}]);
+				$(this).css('text-align', 'center').css('animation', 'albmarquee-' + index + ' ' + speed + 's linear infinite');
+				$(this).parent().css('overflow', 'hidden');
+			}
+
+		});
+	});
 
 })( jQuery );

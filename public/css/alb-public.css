@@ -43,7 +43,6 @@
   font-size: 0.5em;
 }
 .marquee {
- overflow: hidden;
  position: relative;
  margin-right: 20px;
 }
@@ -52,39 +51,11 @@ p {
   white-space: nowrap;
   position: absolute;
 }
-.marquee p { 
- text-align: center;
- -moz-transform:translateX(100%);
- -webkit-transform:translateX(100%);	
- transform:translateX(100%);
- -moz-animation: scroll-left 10s linear infinite;
- -webkit-animation: scroll-left 10s linear infinite;
- animation: scroll-left 10s linear infinite;
-}
-@-moz-keyframes scroll-left {
- 0%   { -moz-transform: translateX(100%); }
- 100% { -moz-transform: translateX(-100%); }
-}
-@-webkit-keyframes scroll-left {
- 0%   { -webkit-transform: translateX(100%); }
- 100% { -webkit-transform: translateX(-100%); }
-}
-@keyframes scroll-left {
- 0%   { 
- -moz-transform: translateX(100%);
- -webkit-transform: translateX(100%);
- transform: translateX(100%); 		
- }
- 100% { 
- -moz-transform: translateX(-100%);
- -webkit-transform: translateX(-100%); 
- transform: translateX(-100%); 
- }
-}
 body {
   background: url(/wp-content/plugins/alb/public/img/background.jpg);
   font-family: 'Roboto Mono', monospace;
   color: white;
+  line-height: 50%;
 }
 .tapentry {
   display: table;
@@ -105,6 +76,9 @@ body {
   vertical-align: middle;
   font-size: 2em;
   padding-bottom: 50px;
+  position: relative;
+  top: 18px;
+  left: 26px;
 }
 .tap-icon {
   display: table-cell;
@@ -119,7 +93,7 @@ body {
   color: #F5E8A1;
   padding-bottom: 50px;
   position: relative;
-  top: 5px;
+  top: 18px;
 }
 .tap-brewery {
   display: table-cell;
@@ -133,12 +107,11 @@ body {
 .tap-subbrewery-row1 {
   display: table-row;
   width: 100%;
-  height: 50%;
+  height: 64%;
 }
 .tap-subbrewery-row1-cell {
   display: table-cell;
   width: 100%;
-  height: 50%;
 }
 .tap-subbrewery-row1-table {
   display: table;
@@ -158,16 +131,15 @@ body {
   font-size: 1.6em;
   position: relative;
   top: -7px;
+  line-height: 50%;
 }
 .tap-subbrewery-row2 {
   display: table-row;
   width: 100%;
-  height: 50%;
 }
 .tap-subbrewery-row2-cell {
   display: table-cell;
   width: 100%;
-  height: 50%;
 }
 .tap-subbrewery-row2-table {
   display: table;
@@ -185,6 +157,7 @@ body {
   vertical-align: middle;
   position: relative;
   top: -8px;
+  line-height: 50%;
 }
 .tap-meta {
   display: table-cell;

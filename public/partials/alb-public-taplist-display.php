@@ -36,10 +36,7 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
   	src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
   	integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   	crossorigin="anonymous"></script>
-  <script 
-  	src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.Marquee/1.5.0/jquery.marquee.min.js" 
-  	integrity="sha256-I7mznqYTCAUiVrmSG/HA3maYvPDATj5PKXityGFo/24=" 
-  	crossorigin="anonymous"></script>
+  <script src="<?= $url . 'js/jquery.keyframes.js' ?>"></script>
   <script src="<?= $url . 'js/alb-public.js' ?>"></script>
 </head>
 <body>
@@ -88,6 +85,17 @@ if ( count( $tap_beers ) > 0 ) {
 		$beer_servt = ! isset( $meta['beer_servt'][0] ) ? '' : $meta['beer_servt'][0];
 		$beer_pair = ! isset( $meta['beer_pair'][0] ) ? '' : $meta['beer_pair'][0];
 
+		$beer_description = 
+			( empty( $beer_og ) ? '' : ( __('Original gravity: ', 'alb') . $beer_og . ' - ' ) ) .
+			( empty( $beer_fg ) ? '' : ( __('Final gravity: ', 'alb') . $beer_fg . ' - ' ) ) .
+			( empty( $beer_color ) ? '' : ( __('Color: ', 'alb') . $beer_color . ' - ' ) ) .
+			( empty( $beer_grains ) ? '' : ( __('Grains: ', 'alb') . $beer_grains . ' - ' ) ) .
+			( empty( $beer_yeast ) ? '' : ( __('Yeast: ', 'alb') . $beer_yeast . ' - '  ) ) .
+			( empty( $beer_hops ) ? '' : ( __('Hops: ', 'alb') . $beer_hops . ' - ' ) ) .
+			( empty( $beer_plato ) ? '' : ( __('Plato degrees: ', 'alb') . $beer_plato . ' - ' ) ) .
+			( empty( $beer_servt ) ? '' : ( __('Serving temperature: ', 'alb') . $beer_servt . ' - ' )  ).
+			( empty( $beer_pair ) ? '' : ( __('Pairings: ', 'alb') . $beer_pair ) );
+
 		$beer_sizes = ! isset( $meta['beer_sizes'][0] ) ? '' : $meta['beer_sizes'][0];
 		$beer_prices = ! isset( $meta['beer_prices'][0] ) ? '' : $meta['beer_prices'][0];
 		$beer_sizem = ! isset( $meta['beer_sizem'][0] ) ? '' : $meta['beer_sizem'][0];
@@ -116,10 +124,8 @@ if ( count( $tap_beers ) > 0 ) {
 		    	<div class="tap-icon">
 		      		<?= get_the_post_thumbnail( $beer->ID, array(60,60) ); ?>
 		    	</div>
-		    	<div class="tap-name">
-		      		<p>
-		        		<?= $beer_name; ?> 
-		      		</p>      
+		    	<div class="tap-name marquee">
+		      		<p><?= $beer_name; ?></p>      
 		    	</div>
 		    	<div class="tap-brewery">
 		      		<div class="tap-subbrewery">
@@ -127,23 +133,19 @@ if ( count( $tap_beers ) > 0 ) {
 		          			<div class="tap-subbrewery-row1-cell">
 		            			<div class="tap-subbrewery-row1-table">
 		              				<div class="tap-subbrewery-row1-row">
-		                				<div class="tap-brewery-name">
-		                  					<p>
-		                    					<?= $beer_brew_name; ?>
-		                  					</p>
+		                				<div class="tap-brewery-name marquee">
+		                  					<p><?= $beer_brew_name; ?></p>
 		                				</div>
 		              				</div>
 		            			</div>
 		          			</div>
 		        		</div>
 		        		<div class="tap-subbrewery-row2">
-		          			<div class="tap-subbrewery-row1-cell">
-		            			<div class="tap-subbrewery-row1-table">
-		              				<div class="tap-subbrewery-row1-row">
-		                				<div class="tap-brewery-address">
-		                  					<p>
-		                    					<?= $beer_brew_add; ?>
-		                  					</p>                  
+		          			<div class="tap-subbrewery-row2-cell">
+		            			<div class="tap-subbrewery-row2-table">
+		              				<div class="tap-subbrewery-row2-row">
+		                				<div class="tap-brewery-address marquee">
+		                  					<p><?= $beer_brew_add; ?></p>                  
 		                				</div>
 		              				</div>
 		            			</div>
@@ -157,19 +159,17 @@ if ( count( $tap_beers ) > 0 ) {
 		          			<div class="tap-submeta-row1-cell">
 		            			<div class="tap-submeta-row1-table">
 		              				<div class="tap-submeta-row1-row">
-		                				<div class="tap-style">
-		                  					<p>
-		                    					<?= $beer_category; ?> 
-		                  					</p>
+		                				<div class="tap-style marquee">
+		                  					<p><?= $beer_category; ?></p>
 		                				</div>
 		                				<div class="tap-abv">
 		                  					<p>
-		                    					<span class='apex'>ABV</span> <?= $beer_abv; ?>
+		                    					<span class='apex'><?php _e('ABV', 'alb'); ?></span> <?= $beer_abv; ?>
 		                  					</p>                  
 		                				</div>
 		                				<div class="tap-ibu">
 		                  					<p>
-		                    					<span class='apex'>IBU</span> <?= $beer_ibu; ?>
+		                    					<span class='apex'><?php _e('IBU', 'alb'); ?></span> <?= $beer_ibu; ?>
 		                  					</p>                  
 		                				</div>
 		              				</div>
@@ -180,10 +180,8 @@ if ( count( $tap_beers ) > 0 ) {
 		          			<div class="tap-submeta-row2-cell">
 		            			<div class="tap-submeta-row2-table">
 		             				<div class="tap-submeta-row2-row">
-		                				<div class="tap-description">
-		                  					<p>
-		                    					Lorem ipsum dolor sit amet marquee Lorem ipsum dolor sit amet marquee 
-		                  					</p>                  
+		                				<div class="tap-description marquee">
+		                  					<p><?= $beer_description; ?></p>                  
 		                				</div>
 		              				</div>
 		            			</div>
@@ -193,12 +191,12 @@ if ( count( $tap_beers ) > 0 ) {
 		    	</div>
 		    	<div class="tap-prices">
 		      		<p>
-		        		<span class='apex'><?= $beer_sizes ?></span> <?= $beer_prices ?>
+		        		<span class='apex'><?= $beer_sizes; ?></span> <?= $beer_prices; ?>
 		      		</p>      
 		    	</div>
 		    	<div class="tap-pricem">
 		      		<p>
-		        		<span class='apex'><?= $beer_sizem ?></span> <?= $beer_pricem ?>
+		        		<span class='apex'><?= $beer_sizem; ?></span> <?= $beer_pricem; ?>
 		      		</p>      
 		    	</div>
 		  	</div>
