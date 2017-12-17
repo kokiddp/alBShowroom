@@ -435,7 +435,7 @@ class Alb_Public {
 	                               if ( !empty( $sandwich_ingredient_1 ) ) {
 	                            ?>
 	                                <li class="sandwich_ingredient_1">
-	                                    <span class="sandwich_profile_heading"><?php _e('Ingredient 1: ','iusetvis'); ?></span>
+	                                    <span class="sandwich_profile_heading"><?php _e('Ingredient 1: ','alb'); ?></span>
 	                                    <span class="sandwich_profile_meta">
 	                                        <?php 
 	                                            echo $sandwich_ingredient_1;
@@ -449,7 +449,7 @@ class Alb_Public {
 	                               if ( !empty( $sandwich_ingredient_2 ) ) {
 	                            ?>
 	                                <li class="sandwich_ingredient_2">
-	                                    <span class="sandwich_profile_heading"><?php _e('Ingredient 2: ','iusetvis'); ?></span>
+	                                    <span class="sandwich_profile_heading"><?php _e('Ingredient 2: ','alb'); ?></span>
 	                                    <span class="sandwich_profile_meta">
 	                                        <?php 
 	                                            echo $sandwich_ingredient_2;
@@ -463,7 +463,7 @@ class Alb_Public {
 	                               if ( !empty( $sandwich_ingredient_3 ) ) {
 	                            ?>
 	                                <li class="sandwich_ingredient_3">
-	                                    <span class="sandwich_profile_heading"><?php _e('Ingredient 3: ','iusetvis'); ?></span>
+	                                    <span class="sandwich_profile_heading"><?php _e('Ingredient 3: ','alb'); ?></span>
 	                                    <span class="sandwich_profile_meta">
 	                                        <?php 
 	                                            echo $sandwich_ingredient_3;
@@ -477,7 +477,7 @@ class Alb_Public {
 	                               if ( !empty( $sandwich_ingredient_4 ) ) {
 	                            ?>
 	                                <li class="sandwich_ingredient_4">
-	                                    <span class="sandwich_profile_heading"><?php _e('Ingredient 4: ','iusetvis'); ?></span>
+	                                    <span class="sandwich_profile_heading"><?php _e('Ingredient 4: ','alb'); ?></span>
 	                                    <span class="sandwich_profile_meta">
 	                                        <?php 
 	                                            echo $sandwich_ingredient_4;
@@ -491,7 +491,7 @@ class Alb_Public {
 	                               if ( !empty( $sandwich_ingredient_5 ) ) {
 	                            ?>
 	                                <li class="sandwich_ingredient_5">
-	                                    <span class="sandwich_profile_heading"><?php _e('Ingredient 5: ','iusetvis'); ?></span>
+	                                    <span class="sandwich_profile_heading"><?php _e('Ingredient 5: ','alb'); ?></span>
 	                                    <span class="sandwich_profile_meta">
 	                                        <?php 
 	                                            echo $sandwich_ingredient_5;
@@ -505,7 +505,7 @@ class Alb_Public {
 	                               if ( !empty( $sandwich_price ) ) {
 	                            ?>
 	                                <li class="sandwich_price">
-	                                    <span class="sandwich_profile_heading"><?php _e('Price: ','iusetvis'); ?> €</span>
+	                                    <span class="sandwich_profile_heading"><?php _e('Price: ','alb'); ?> €</span>
 	                                    <span class="sandwich_profile_meta">
 	                                        <?php 
 	                                            echo $sandwich_price;
@@ -614,7 +614,7 @@ class Alb_Public {
 	                               if ( !empty( $event_start_date ) ) {
 	                            ?>
 	                                <li class="event_start_date">
-	                                    <span class="event_profile_heading"><?php _e('Start date: ','iusetvis'); ?></span>
+	                                    <span class="event_profile_heading"><?php _e('Start date: ','alb'); ?></span>
 	                                    <span class="event_profile_meta">
 	                                        <?php 
 	                                            echo date_i18n( get_option( 'date_format' ) , $event_start_date );
@@ -628,7 +628,7 @@ class Alb_Public {
 	                               if ( !empty( $event_end_date ) ) {
 	                            ?>
 	                                <li class="event_end_date">
-	                                    <span class="event_profile_heading"><?php _e('End date: ','iusetvis'); ?></span>
+	                                    <span class="event_profile_heading"><?php _e('End date: ','alb'); ?></span>
 	                                    <span class="event_profile_meta">
 	                                        <?php 
 	                                            echo date_i18n( get_option( 'date_format' ) , $event_end_date );

@@ -118,8 +118,8 @@ class Alb_Admin {
 	public function alb_add_admin_menu(  ) { 
 
 		add_menu_page( 
-			__( 'AlBirrificio Showroom Settings', 'iusetvis' ),
-			__( 'alB Settings', 'iusetvis' ),
+			__( 'AlBirrificio Showroom Settings', 'alb' ),
+			__( 'alB Settings', 'alb' ),
 			'edit_pages', 
 			$this->plugin_name . '_options_page',
 			array( $this, 'alb_render_options_page' ),
@@ -659,7 +659,7 @@ class Alb_Admin {
 		?>
 		<form action='options.php' method='post'>
 
-			<h2><?php _e( 'AlBirrificio Showroom Settings', 'iusetvis' ) ?></h2>
+			<h2><?php _e( 'AlBirrificio Showroom Settings', 'alb' ) ?></h2>
 
 			<?php
 			settings_fields( $this->plugin_name . '_options_page' );

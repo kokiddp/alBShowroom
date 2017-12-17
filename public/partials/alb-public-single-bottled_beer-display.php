@@ -3,7 +3,7 @@
 /**
  * Template for Single Tap Beer Post Type
  *
- * @link       https://github.com/kokiddp/IusEtVis
+ * @link       https://github.com/kokiddp/alb
  * @since      1.0.0
  *
 * @package    Alb

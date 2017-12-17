@@ -3,7 +3,7 @@
 /**
  * Template for Single Sandwich Post Type
  *
- * @link       https://github.com/kokiddp/IusEtVis
+ * @link       https://github.com/kokiddp/alb
  * @since      1.0.0
  *
 * @package    Alb
@@ -28,14 +28,6 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
   <script
     src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
-  <script
-    src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-    crossorigin="anonymous"></script>
-  <script 
-    src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.Marquee/1.5.0/jquery.marquee.min.js" 
-    integrity="sha256-I7mznqYTCAUiVrmSG/HA3maYvPDATj5PKXityGFo/24=" 
     crossorigin="anonymous"></script>
   <script src="<?= $url . 'js/alb-public.js' ?>"></script>
 </head>
@@ -89,7 +81,7 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
            if ( !empty( $sandwich_ingredient_1 ) ) {
         ?>
             <li class="sandwich_ingredient_1">
-                <span class="sandwich_profile_heading"><?php _e('1: ','iusetvis'); ?></span>
+                <span class="sandwich_profile_heading"><?php _e('1: ','alb'); ?></span>
                 <span class="sandwich_profile_meta">
                     <?php 
                         echo $sandwich_ingredient_1;
@@ -103,7 +95,7 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
            if ( !empty( $sandwich_ingredient_2 ) ) {
         ?>
             <li class="sandwich_ingredient_2">
-                <span class="sandwich_profile_heading"><?php _e('2: ','iusetvis'); ?></span>
+                <span class="sandwich_profile_heading"><?php _e('2: ','alb'); ?></span>
                 <span class="sandwich_profile_meta">
                     <?php 
                         echo $sandwich_ingredient_2;
@@ -117,7 +109,7 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
            if ( !empty( $sandwich_ingredient_3 ) ) {
         ?>
             <li class="sandwich_ingredient_3">
-                <span class="sandwich_profile_heading"><?php _e('3: ','iusetvis'); ?></span>
+                <span class="sandwich_profile_heading"><?php _e('3: ','alb'); ?></span>
                 <span class="sandwich_profile_meta">
                     <?php 
                         echo $sandwich_ingredient_3;
@@ -131,7 +123,7 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
            if ( !empty( $sandwich_ingredient_4 ) ) {
         ?>
             <li class="sandwich_ingredient_4">
-                <span class="sandwich_profile_heading"><?php _e('4: ','iusetvis'); ?></span>
+                <span class="sandwich_profile_heading"><?php _e('4: ','alb'); ?></span>
                 <span class="sandwich_profile_meta">
                     <?php 
                         echo $sandwich_ingredient_4;
@@ -145,7 +137,7 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
            if ( !empty( $sandwich_ingredient_5 ) ) {
         ?>
             <li class="sandwich_ingredient_5">
-                <span class="sandwich_profile_heading"><?php _e('5: ','iusetvis'); ?></span>
+                <span class="sandwich_profile_heading"><?php _e('5: ','alb'); ?></span>
                 <span class="sandwich_profile_meta">
                     <?php 
                         echo $sandwich_ingredient_5;

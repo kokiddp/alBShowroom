@@ -7,7 +7,7 @@
   src: url(/wp-content/plugins/alb/public/font/roboto_mono.ttf);
 }
 #header {
-	height: 185px;
+	height: 175px;
 	width: 100%;
 	position: relative;
 }
@@ -30,10 +30,11 @@
 	left: 50px;
 }
 #alb_logo {
-	background: url(/wp-content/plugins/alb/public/img/header_alblogo.png) top left no-repeat;
-	background-size: 600px 108px;
+	-webkit-mask-image: url(/wp-content/plugins/alb/public/img/alblogo.svg);
+  mask-image: url(/wp-content/plugins/alb/public/img/alblogo.svg);
+  background-color: #FFF;
 	height: 108px;
-	width: 600px;
+	width: 530px;
 	position: absolute;
 	top: 35px;
 	right: 50px;
@@ -328,14 +329,14 @@ body {
 
 }
 #alb_sandwich_logo {
-	background: url(/wp-content/plugins/alb/public/img/header_alblogo.png) top left no-repeat;
+	background: url(/wp-content/plugins/alb/public/img/alblogo.svg) top left no-repeat;
 	background-size: 300px 54px;
 	height: 54px;
 	width: 300px;
 	position: absolute;
 	bottom: 50px;
 	right: calc(50% - 150px);
-	filter: invert(100%);
+	fill: #000;
 }
 .sandwich_ingredients_header {
 	color: rgb(249, 247, 192);
@@ -381,4 +382,115 @@ body {
   font-size: 100px;
   font-family: 'Roboto Mono';
   text-align: center;
+}
+
+.jcarousel {
+    position: relative;
+    overflow: hidden;    
+}
+.jcarousel ul {
+    width: 20000em;
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.jcarousel li {
+    float: left;
+    position: relative;
+    
+}
+#event_wrapper {
+  position: relative;
+  top: 50px;
+  width: 1710px;
+  height: 636px;
+  margin: auto;
+}
+#event_wrapper ul {
+
+}
+#event_wrapper li {
+  width: 457px;
+  height: 586px;
+  margin-right: 90px;
+  border: 6px solid #f9f7c0;
+  padding: 19px;
+  background-color: #fff;
+}
+.event_pic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 497px;
+  height: 311px;
+}
+.event_name {
+  position: absolute;
+  top: 320px;
+  left: 20px;
+  width: 457px;
+  color: rgb(51, 51, 51);
+  font-size: 28px;
+  font-weight: 700;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+.event_dates {
+  position: absolute;
+  top: 362px;
+  left: 20px;
+  width: 457px;
+  color: rgb(102, 102, 102);
+  font-size: 23px;
+  font-weight: 700;
+}
+.event_text {
+  position: absolute;
+  top: 445px;
+  left: 20px;
+  width: 457px;
+  height: 150px;
+  overflow: hidden;
+}
+.event_text > p {
+  position: relative;
+  color: rgb(102, 102, 102);
+  font-size: 23px;
+  line-height: 34.5px;
+  font-weight: 500;
+  word-wrap: break-word;
+  vertical-align: baseline;
+  font-family: "Open Sans", Arial, sans-serif;
+  text-align: left;
+}
+p.header_title {
+  font-family: "Scream Again";
+  font-size: 80px;
+  font-weight: 500;
+  color: #FFF;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+#alb_logo_footer {
+  position: absolute;
+  bottom: 20px;
+  height: 63px;
+  width: 300px;
+  left: calc(50% - 150px);
+  -webkit-mask-image: url(/wp-content/plugins/alb/public/img/alblogo.svg);
+  mask-image: url(/wp-content/plugins/alb/public/img/alblogo.svg);
+  background-color: #FFF;
+}
+#bottlelist_wrapper {
+  height: 890px;
+  width: 1904px;
+}
+#bottlelist_container {
+  height: 20000em;
+  width: 1904px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }

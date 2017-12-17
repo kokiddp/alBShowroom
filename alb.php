@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       alBShowroom
  * Plugin URI:        https://github.com/kokiddp/alBShowroom
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       AlBirrificio Showroom awesomeness!
  * Version:           1.0.0
  * Author:            Gabriele Coquillard
  * Author URI:        https://github.com/kokiddp/

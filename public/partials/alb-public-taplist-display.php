@@ -32,10 +32,6 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
   	src="https://code.jquery.com/jquery-3.2.1.min.js"
   	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   	crossorigin="anonymous"></script>
-  <script
-  	src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-  	integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-  	crossorigin="anonymous"></script>
   <script src="<?= $url . 'js/jquery-keyframes.js' ?>"></script>
   <script src="<?= $url . 'js/alb-public.js' ?>"></script>
 </head>
@@ -165,14 +161,10 @@ if ( count( $tap_beers ) > 0 ) {
 		                  					<p><?= $beer_category; ?></p>
 		                				</div>
 		                				<div class="tap-abv">
-		                  					<p>
-		                    					<span class='apex'><?php _e('ABV', 'alb'); ?></span> <?= $beer_abv; ?>
-		                  					</p>                  
+		                  					<p><span class='apex'><?php _e('ABV', 'alb'); ?></span> <?= $beer_abv; ?></p>                  
 		                				</div>
 		                				<div class="tap-ibu">
-		                  					<p>
-		                    					<span class='apex'><?php _e('IBU', 'alb'); ?></span> <?= $beer_ibu; ?>
-		                  					</p>                  
+		                  					<p><span class='apex'><?php _e('IBU', 'alb'); ?></span> <?= $beer_ibu; ?></p>                  
 		                				</div>
 		              				</div>
 		            			</div>
@@ -192,14 +184,10 @@ if ( count( $tap_beers ) > 0 ) {
 		      		</div>
 		    	</div>
 		    	<div class="tap-prices">
-		      		<p>
-		        		<span class='apex'><?= $beer_sizes; ?></span> <?= $beer_prices; ?>
-		      		</p>      
+		      		<p><span class='apex'><?= $beer_sizes; ?></span> <?= $beer_prices; ?><?php if ( !empty( $beer_prices ) && $beer_prices != '' ) { echo ' €'; } ?></p>      
 		    	</div>
 		    	<div class="tap-pricem">
-		      		<p>
-		        		<span class='apex'><?= $beer_sizem; ?></span> <?= $beer_pricem; ?>
-		      		</p>      
+		      		<p><span class='apex'><?= $beer_sizem; ?></span> <?= $beer_pricem; ?><?php if ( !empty( $beer_pricem ) && $beer_pricem != '' ) { echo ' €'; } ?></p>      
 		    	</div>
 		  	</div>
 		</div>

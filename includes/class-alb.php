@@ -773,7 +773,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_brew_name" class="regular-text" value="<?php echo $beer_brew_name; ?>">
+					<input type="text" name="beer_brew_name" class="regular-text" value="<?php echo $beer_brew_name; ?>" required>
 					<p class="description"><?php _e( 'Example: Birrificio Aosta', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -795,7 +795,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_abv" class="regular-text" value="<?php echo $beer_abv; ?>">
+					<input type="text" name="beer_abv" class="regular-text" value="<?php echo $beer_abv; ?>" required>
 					<p class="description"><?php _e( 'Example: 4.5%', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -806,7 +806,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_ibu" class="regular-text" value="<?php echo $beer_ibu; ?>">
+					<input type="text" name="beer_ibu" class="regular-text" value="<?php echo $beer_ibu; ?>" required>
 					<p class="description"><?php _e( 'Example: 40', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -927,7 +927,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_prices" class="regular-text" value="<?php echo $beer_prices; ?>">
+					<input type="number" step="0.01"  name="beer_prices" class="regular-text" value="<?php echo $beer_prices; ?>">€
 					<p class="description"><?php _e( 'Example: 2.5€', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -949,7 +949,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_pricem" class="regular-text" value="<?php echo $beer_pricem; ?>">
+					<input type="number" step="0.01"  name="beer_pricem" class="regular-text" value="<?php echo $beer_pricem; ?>">€
 					<p class="description"><?php _e( 'Example: 5€', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -1112,7 +1112,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="number" name="sandwich_price" class="regular-text" value="<?php echo $sandwich_price; ?>">€
+					<input type="number" step="0.01" name="sandwich_price" class="regular-text" value="<?php echo $sandwich_price; ?>" required>€
 					<p class="description"><?php _e( 'Example: 5', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -1168,7 +1168,7 @@ class Alb {
 	public function add_event_meta_boxes() {
 		add_meta_box(
 			'time_fields',
-			__( 'Event description', 'iusetvis' ),
+			__( 'Event description', 'alb' ),
 			array( $this, 'render_event_meta_boxes' ),
 			'event',
 			'normal',
@@ -1177,7 +1177,7 @@ class Alb {
 	}
 
    /**
-	* The HTML for the time fields
+	* The HTML for the fields
 	*/
 	function render_event_meta_boxes( $post ) {
 
@@ -1203,7 +1203,7 @@ class Alb {
 
 			<tr>
 				<td class="event_meta_box_td" colspan="1">
-					<label for="event_start_display" style="font-weight: bold;"><?php _e( 'Start Display Date', 'iusetvis' ); ?>
+					<label for="event_start_display" style="font-weight: bold;"><?php _e( 'Start Display Date', 'alb' ); ?>
 					</label>
 				</td>
 				<td colspan="4">
@@ -1213,7 +1213,7 @@ class Alb {
 
 			<tr>
 				<td class="event_meta_box_td" colspan="1">
-					<label for="event_end_display" style="font-weight: bold;"><?php _e( 'End Display Date', 'iusetvis' ); ?>
+					<label for="event_end_display" style="font-weight: bold;"><?php _e( 'End Display Date', 'alb' ); ?>
 					</label>
 				</td>
 				<td colspan="4">
@@ -1223,7 +1223,7 @@ class Alb {
 
 			<tr>
 				<td class="event_meta_box_td" colspan="1">
-					<label for="event_start_date" style="font-weight: bold;"><?php _e( 'Event Start Date', 'iusetvis' ); ?>
+					<label for="event_start_date" style="font-weight: bold;"><?php _e( 'Event Start Date', 'alb' ); ?>
 					</label>
 				</td>
 				<td colspan="4">
@@ -1233,7 +1233,7 @@ class Alb {
 
 			<tr>
 				<td class="event_meta_box_td" colspan="1">
-					<label for="event_end_date" style="font-weight: bold;"><?php _e( 'Event End Date', 'iusetvis' ); ?>
+					<label for="event_end_date" style="font-weight: bold;"><?php _e( 'Event End Date', 'alb' ); ?>
 					</label>
 				</td>
 				<td colspan="4">
