@@ -111,6 +111,7 @@ class Alb_Public {
 		add_shortcode( 'tap_beer', array( $this, 'tap_beer_shortcode' ) );
 		add_shortcode( 'sandwich', array( $this, 'sandwich_shortcode' ) );
 		add_shortcode( 'event', array( $this, 'event_shortcode' ) );
+		add_shortcode( 'news', array( $this, 'news_shortcode' ) );
 
 	}
 
@@ -187,7 +188,7 @@ class Alb_Public {
 	}
 
 	/**
-	 * Register the Bottled List Page.
+	 * Register the Events Page.
 	 *
 	 * @since    1.0.0
 	 */
@@ -195,6 +196,21 @@ class Alb_Public {
 
 	    if(is_page('events')){	
 			$page = plugin_dir_path( __FILE__ ) . 'partials/alb-public-events-display.php';
+			include($page);
+			die();
+		}
+
+	}
+
+	/**
+	 * Register the News Page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function news_page() {
+
+	    if(is_page('news')){	
+			$page = plugin_dir_path( __FILE__ ) . 'partials/alb-public-news-display.php';
 			include($page);
 			die();
 		}
@@ -632,6 +648,129 @@ class Alb_Public {
 	                                    <span class="event_profile_meta">
 	                                        <?php 
 	                                            echo date_i18n( get_option( 'date_format' ) , $event_end_date );
+	                                        ?>
+	                                    </span>
+	                                </li>
+	                            <?php } ?>
+
+	                        </ul>
+	                    </div><!-- .event_profile -->
+
+	                </div><!-- .event_profile_wrap -->
+
+	            </div><!-- .post-content-inner-wrap .event_post_list .entry-content -->
+
+            <?php endwhile;
+        wp_reset_postdata(); ?>
+
+    	<?php $event = ob_get_clean();
+
+    	return $event;
+
+    	}
+
+    }
+
+    public function news_shortcode( $atts ) {
+
+        ob_start();
+
+        /**
+        * Define attributes defaults
+        *
+        */
+        extract( shortcode_atts( array ( 'id' => '' ), $atts ) );
+
+        /**
+        * Define WP_Query parameters based on shortcode_atts
+        *
+        */
+        $args = array(
+            'post_type'      => 'news',
+            'page_id'        => $id
+        );
+
+        /**
+        * Check if the user wants to display by category/term and
+        * if so, get the custom posts term/category
+        *
+        */
+        $query = new WP_Query( $args );
+
+        /**
+        * Run the loop based on the parameters
+        *
+        */
+        if ( $query->have_posts() ) { 
+
+        ?>
+
+            <?php while ( $query->have_posts() ) : $query->the_post(); ?>
+
+				<div class="post-content-inner-wrap news_post_list entry-content">
+
+	                <?php the_title( '<h2 class="news-title">', '</h2>' ); ?>
+
+	                <?php $taxonomies = get_the_terms(get_the_ID(), 'news_tag'); 
+	                if ( $taxonomies && count( $taxonomies ) > 0 ) {
+	                    foreach ($taxonomies as $taxonomy) { ?>
+	                        <h2><?php echo esc_html( $taxonomy->name ); ?></h2>
+	                    <?php }?>
+
+	                <?php }?>
+
+	                <?php $categories = get_the_terms(get_the_ID(), 'news_category');
+	                if ( $categories && count( $categories ) > 0 ) {
+	                    foreach ($categories as $category) { ?>
+	                        <h3><?php echo esc_html( $category->name ); ?></h3>
+	                    <?php }?>
+
+	                <?php }?>
+
+	                <?php if ( has_post_thumbnail() ) { ?>
+
+		                <div class="news_image_wrap">	                    
+		                    <div class="news_image">
+		                        <?php echo get_the_post_thumbnail( get_the_ID(), 'medium' ); ?>
+		                    </div><!-- .news_image -->	                    
+		                </div><!-- .news_image_wrap -->
+
+	                <?php } // end featured image check ?>
+
+	                <div class="news_profile_wrap">
+
+						<div class="news_post_content">
+
+	                        <?php the_content(); ?>
+
+	                    </div><!-- .news_post_content -->
+
+	                    <div class="news_profile">
+	                        <ul>
+
+	                            <?php // Start date
+	                               $event_start_date = get_post_meta( get_the_ID(), 'news_start_date', true );
+	                               if ( !empty( $news_start_date ) ) {
+	                            ?>
+	                                <li class="news_start_date">
+	                                    <span class="news_profile_heading"><?php _e('Start date: ','alb'); ?></span>
+	                                    <span class="news_profile_meta">
+	                                        <?php 
+	                                            echo date_i18n( get_option( 'date_format' ) , $news_start_date );
+	                                        ?>
+	                                    </span>
+	                                </li>
+	                            <?php } ?>
+
+	                            <?php // End date
+	                               $news_end_date = get_post_meta( get_the_ID(), 'news_end_date', true );
+	                               if ( !empty( $news_end_date ) ) {
+	                            ?>
+	                                <li class="news_end_date">
+	                                    <span class="news_profile_heading"><?php _e('End date: ','alb'); ?></span>
+	                                    <span class="news_profile_meta">
+	                                        <?php 
+	                                            echo date_i18n( get_option( 'date_format' ) , $news_end_date );
 	                                        ?>
 	                                    </span>
 	                                </li>

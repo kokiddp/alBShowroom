@@ -72,6 +72,19 @@ class Alb_Activator {
 			wp_insert_post( $events );
 		}
 
+		if ( !post_exists( 'news' ) ) {
+			$events = array(
+		        'post_title' => __( 'News', 'alb' ),
+		        'post_name' => 'news',
+		        'post_status' => 'publish',
+		        'post_type' => 'page',
+		        'comment_status' => 'closed',
+		        'ping_status' => 'open'
+		    );
+
+			wp_insert_post( $events );
+		}
+
 	}
 
 	/**
@@ -84,7 +97,7 @@ class Alb_Activator {
 	public function post_exists( $post_name ) {
 
 		global $wpdb;
-	    if($wpdb->get_row("SELECT post_name FROM wp_posts WHERE post_name = '" . $post_name . "'", 'ARRAY_A')) {
+	    if( is_object( $wpdb->get_row("SELECT post_name FROM wp_posts WHERE post_name = '" . $post_name . "'", 'ARRAY_A') ) ) {
 	        return true;
 	    } else {
 	        return false;

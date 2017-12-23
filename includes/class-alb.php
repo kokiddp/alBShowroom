@@ -165,11 +165,19 @@ class Alb {
 		$this->loader->add_action( 'add_meta_boxes', $this, 'add_beer_meta_boxes' );
 		$this->loader->add_action( 'save_post', $this, 'save_beer_meta_boxes', 10, 2 );
 
+		/*
 		$this->loader->add_action( 'add_meta_boxes', $this, 'add_sandwich_meta_boxes' );
 		$this->loader->add_action( 'save_post', $this, 'save_sandwich_meta_boxes', 10, 2 );
+		*/
 
 		$this->loader->add_action( 'add_meta_boxes', $this, 'add_event_meta_boxes' );
-		$this->loader->add_action( 'save_post', $this, 'save_event_meta_boxes', 10, 2 );	
+		$this->loader->add_action( 'save_post', $this, 'save_event_meta_boxes', 10, 2 );
+
+		$this->loader->add_action( 'add_meta_boxes', $this, 'add_news_meta_boxes' );
+		$this->loader->add_action( 'save_post', $this, 'save_news_meta_boxes', 10, 2 );
+
+		$this->loader->add_action( __('beer_category', 'alb') . '_edit_form', $plugin_admin, 'check_category_name_edit' );
+		$this->loader->add_action( __('beer_category', 'alb') . '_add_form', $plugin_admin, 'check_category_name_add' );
 
 	}
 
@@ -189,7 +197,9 @@ class Alb {
 
 		$this->loader->add_filter( 'template_include', $plugin_public, 'bottled_beer_templates' );
 		$this->loader->add_filter( 'template_include', $plugin_public, 'tap_beer_templates' );
+		/*
 		$this->loader->add_filter( 'template_include', $plugin_public, 'sandwich_templates' );
+		*/
 
 	}
 
@@ -210,17 +220,24 @@ class Alb {
 		$this->loader->add_action( 'init', $this, 'register_beer_taxonomy_category', 0 );
 		$this->loader->add_action( 'init', $this, 'register_beer_taxonomy_tag', 0 );
 
+		/*
 		$this->loader->add_action( 'init', $this, 'register_sandwich_post_type', 0 );
 		$this->loader->add_action( 'init', $this, 'register_sandwich_taxonomy_category', 0 );
 		$this->loader->add_action( 'init', $this, 'register_sandwich_taxonomy_tag', 0 );
+		*/
 
 		$this->loader->add_action( 'init', $this, 'register_event_post_type', 0 );
 		$this->loader->add_action( 'init', $this, 'register_event_taxonomy_category', 0 );
 		$this->loader->add_action( 'init', $this, 'register_event_taxonomy_tag', 0 );
 
+		$this->loader->add_action( 'init', $this, 'register_news_post_type', 0 );
+		$this->loader->add_action( 'init', $this, 'register_news_taxonomy_category', 0 );
+		$this->loader->add_action( 'init', $this, 'register_news_taxonomy_tag', 0 );
+
 		$this->loader->add_action( 'wp', $plugin_public, 'taplist_page' );
 		$this->loader->add_action( 'wp', $plugin_public, 'bottlelist_page' );
 		$this->loader->add_action( 'wp', $plugin_public, 'events_page' );
+		$this->loader->add_action( 'wp', $plugin_public, 'news_page' );
 
 	}
 
@@ -304,8 +321,7 @@ class Alb {
 			'editor',
 			'thumbnail',
 			'revisions',
-			'tags',
-			'excerpt'
+			'tags'
 		);
 
 		$args = array(
@@ -348,8 +364,7 @@ class Alb {
 			'editor',
 			'thumbnail',
 			'revisions',
-			'tags',
-			'excerpt'
+			'tags'
 		);
 
 		$args = array(
@@ -373,6 +388,7 @@ class Alb {
 	 *
 	 * @link http://codex.wordpress.org/Function_Reference/register_post_type
 	 */
+	/*
 	public function register_sandwich_post_type() {
 		$labels = array(
 			'name'               => __( 'Sandwiches', 'alb' ),
@@ -389,11 +405,9 @@ class Alb {
 
 		$supports = array(
 			'title',
-			'editor',
 			'thumbnail',
 			'revisions',
-			'tags',
-			'excerpt'
+			'tags'
 		);
 
 		$args = array(
@@ -411,6 +425,7 @@ class Alb {
 
 		register_post_type( 'sandwich', $args );
 	}
+	*/
 
 	/**
 	 * Register a taxonomy for Beer Categories.
@@ -503,6 +518,7 @@ class Alb {
 	 *
 	 * @link http://codex.wordpress.org/Function_Reference/register_taxonomy
 	 */
+	/*
 	public function register_sandwich_taxonomy_category() {
 		$labels = array(
 			'name'                       => __( 'Sandwich Categories', 'alb' ),
@@ -540,12 +556,14 @@ class Alb {
 
 		register_taxonomy( 'sandwich_category',  array( 'sandwich' ), $args );
 	}
+	*/
 
 	/**
 	 * Register a taxonomy for Sandwich Tags.
 	 *
 	 * @link http://codex.wordpress.org/Function_Reference/register_taxonomy
 	 */
+	/*
 	public function register_sandwich_taxonomy_tag() {
 		$labels = array(
 			'name'                       => __( 'Sandwich Tags', 'alb' ),
@@ -583,6 +601,7 @@ class Alb {
 
 		register_taxonomy( 'sandwich_tag',  array( 'sandwich' ), $args );
 	}
+	*/
 
 	/**
 	 * Register the Event custom post type.
@@ -608,8 +627,7 @@ class Alb {
 			'editor',
 			'thumbnail',
 			'revisions',
-			'tags',
-			'excerpt'
+			'tags'
 		);
 
 		$args = array(
@@ -715,6 +733,135 @@ class Alb {
 	}
 
 	/**
+	 * Register the News custom post type.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/register_post_type
+	 */
+	public function register_news_post_type() {
+		$labels = array(
+			'name'               => __( 'News', 'alb' ),
+			'singular_name'      => __( 'News', 'alb' ),
+			'add_new'            => __( 'Add News', 'alb' ),
+			'add_new_item'       => __( 'Add News', 'alb' ),
+			'edit_item'          => __( 'Edit News', 'alb' ),
+			'new_item'           => __( 'New News', 'alb' ),
+			'view_item'          => __( 'View News', 'alb' ),
+			'search_items'       => __( 'Search News', 'alb' ),
+			'not_found'          => __( 'No News found', 'alb' ),
+			'not_found_in_trash' => __( 'No News in the trash', 'alb' ),
+		);
+
+		$supports = array(
+			'title',
+			'editor',
+			'thumbnail',
+			'revisions',
+			'tags'
+		);
+
+		$args = array(
+			'labels'          => $labels,
+			'supports'        => $supports,
+			'public'          => true,
+			'capability_type' => 'post',
+			'rewrite'         => array( 'slug' => __( 'news', 'alb' ) ), // Permalinks format
+			'menu_position'   => 30,
+			'menu_icon'       => 'dashicons-star-empty'
+		);
+
+		//filter for altering the args
+		$args = apply_filters( 'news_post_type_args', $args );
+
+		register_post_type( 'news', $args );
+	}
+
+	/**
+	 * Register a taxonomy for News Categories.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/register_taxonomy
+	 */
+	public function register_news_taxonomy_category() {
+		$labels = array(
+			'name'                       => __( 'News Categories', 'alb' ),
+			'singular_name'              => __( 'News Category', 'alb' ),
+			'menu_name'                  => __( 'News Categories', 'alb' ),
+			'edit_item'                  => __( 'Edit News Category', 'alb' ),
+			'update_item'                => __( 'Update News Category', 'alb' ),
+			'add_new_item'               => __( 'Add New News Category', 'alb' ),
+			'new_item_name'              => __( 'New News Category Name', 'alb' ),
+			'parent_item'                => __( 'Parent News Category', 'alb' ),
+			'parent_item_colon'          => __( 'Parent News Category:', 'alb' ),
+			'all_items'                  => __( 'All News Categories', 'alb' ),
+			'search_items'               => __( 'Search News Categories', 'alb' ),
+			'popular_items'              => __( 'Popular News Categories', 'alb' ),
+			'separate_items_with_commas' => __( 'Separate News categories with commas', 'alb' ),
+			'add_or_remove_items'        => __( 'Add or remove News categories', 'alb' ),
+			'choose_from_most_used'      => __( 'Choose from the most used News categories', 'alb' ),
+			'not_found'                  => __( 'No News categories found.', 'alb' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'public'            => true,
+			'show_in_nav_menus' => true,
+			'show_ui'           => true,
+			'show_tagcloud'     => true,
+			'hierarchical'      => true,
+			'rewrite'           => array( 'slug' => __('news_category', 'alb') ),
+			'show_admin_column' => true,
+			'query_var'         => true,
+		);
+
+		//filter for altering the args
+		$args = apply_filters( 'news_category_taxonomy_args', $args );
+
+		register_taxonomy( 'news_category',  array( 'news' ), $args );
+	}
+
+	/**
+	 * Register a taxonomy for News Tags.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/register_taxonomy
+	 */
+	public function register_news_taxonomy_tag() {
+		$labels = array(
+			'name'                       => __( 'News Tags', 'alb' ),
+			'singular_name'              => __( 'News Tag', 'alb' ),
+			'menu_name'                  => __( 'News Tags', 'alb' ),
+			'edit_item'                  => __( 'Edit News Tag', 'alb' ),
+			'update_item'                => __( 'Update News Tag', 'alb' ),
+			'add_new_item'               => __( 'Add New News Tag', 'alb' ),
+			'new_item_name'              => __( 'New News Tag Name', 'alb' ),
+			'parent_item'                => null,
+			'parent_item_colon'          => null,
+			'all_items'                  => __( 'All News Tags', 'alb' ),
+			'search_items'               => __( 'Search News Tag', 'alb' ),
+			'popular_items'              => __( 'Popular News Tag', 'alb' ),
+			'separate_items_with_commas' => __( 'Separate News Tags with commas', 'alb' ),
+			'add_or_remove_items'        => __( 'Add or remove News Tags', 'alb' ),
+			'choose_from_most_used'      => __( 'Choose from the most used News Tags', 'alb' ),
+			'not_found'                  => __( 'No News Tag found.', 'alb' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'public'            => true,
+			'show_in_nav_menus' => true,
+			'show_ui'           => true,
+			'show_tagcloud'     => true,
+			'hierarchical'      => false,
+			'rewrite'           => array( 'slug' => __('news', 'alb') ),
+			'show_admin_column' => true,
+			'query_var'         => true,
+		);
+
+		//filter for altering the args
+		$args = apply_filters( 'news_tag_taxonomy_args', $args );
+
+		register_taxonomy( 'news_tag',  array( 'news' ), $args );
+	}
+
+	/**
 	 * Register the time metaboxes to be used for the beer post type
 	 *
 	 */
@@ -752,6 +899,8 @@ class Alb {
 		$beer_prices = ! isset( $meta['beer_prices'][0] ) ? '' : $meta['beer_prices'][0];
 		$beer_sizem = ! isset( $meta['beer_sizem'][0] ) ? '' : $meta['beer_sizem'][0];
 		$beer_pricem = ! isset( $meta['beer_pricem'][0] ) ? '' : $meta['beer_pricem'][0];
+		$beer_sizel = ! isset( $meta['beer_sizel'][0] ) ? '' : $meta['beer_sizel'][0];
+		$beer_pricel = ! isset( $meta['beer_pricel'][0] ) ? '' : $meta['beer_pricel'][0];
 
 		wp_nonce_field( basename( __FILE__ ), 'beer_profile_fields' ); ?>
 
@@ -773,7 +922,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_brew_name" class="regular-text" value="<?php echo $beer_brew_name; ?>" required>
+					<input type="text" name="beer_brew_name" class="regular-text" value="<?php echo $beer_brew_name; ?>" required maxlength="23">
 					<p class="description"><?php _e( 'Example: Birrificio Aosta', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -784,7 +933,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_brew_add" class="regular-text" value="<?php echo $beer_brew_add; ?>">
+					<input type="text" name="beer_brew_add" class="regular-text" value="<?php echo $beer_brew_add; ?>"  maxlength="37">
 					<p class="description"><?php _e( 'Example: Aosta (AO), ITA', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -795,8 +944,8 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_abv" class="regular-text" value="<?php echo $beer_abv; ?>" required>
-					<p class="description"><?php _e( 'Example: 4.5%', 'alb' ); ?></p>
+					<input type="number" step="0.1" name="beer_abv" class="regular-text" value="<?php echo $beer_abv; ?>" required autocomplete="off">%
+					<p class="description"><?php _e( 'Example: 4.5', 'alb' ); ?></p>
 				</td>
 			</tr>
 
@@ -806,7 +955,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_ibu" class="regular-text" value="<?php echo $beer_ibu; ?>" required>
+					<input type="number" name="beer_ibu" class="regular-text" value="<?php echo $beer_ibu; ?>" required autocomplete="off">
 					<p class="description"><?php _e( 'Example: 40', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -817,7 +966,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_og" class="regular-text" value="<?php echo $beer_og; ?>">
+					<input type="number" step="0.001" name="beer_og" class="regular-text" value="<?php echo $beer_og; ?>" autocomplete="off">
 					<p class="description"><?php _e( 'Example: 1.046', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -828,7 +977,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_fg" class="regular-text" value="<?php echo $beer_fg; ?>">
+					<input type="number" step="0.001" name="beer_fg" class="regular-text" value="<?php echo $beer_fg; ?>" autocomplete="off">
 					<p class="description"><?php _e( 'Example: 1.020', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -883,7 +1032,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="text" name="beer_plato" class="regular-text" value="<?php echo $beer_plato; ?>">
+					<input type="number" step="0.1" name="beer_plato" class="regular-text" value="<?php echo $beer_plato; ?>" autocomplete="off">°
 					<p class="description"><?php _e( 'Example: 18', 'alb' ); ?></p>
 				</td>
 			</tr>
@@ -895,7 +1044,7 @@ class Alb {
 				</td>
 				<td colspan="4">
 					<input type="text" name="beer_servt" class="regular-text" value="<?php echo $beer_servt; ?>">
-					<p class="description"><?php _e( 'Example: 8°', 'alb' ); ?></p>
+					<p class="description"><?php _e( 'Example: 7-8°', 'alb' ); ?></p>
 				</td>
 			</tr>
 
@@ -927,8 +1076,8 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="number" step="0.01"  name="beer_prices" class="regular-text" value="<?php echo $beer_prices; ?>">€
-					<p class="description"><?php _e( 'Example: 2.5€', 'alb' ); ?></p>
+					<input type="number" step="0.01"  name="beer_prices" class="regular-text" value="<?php echo $beer_prices; ?>" autocomplete="off">€
+					<p class="description"><?php _e( 'Example: 2.5', 'alb' ); ?></p>
 				</td>
 			</tr>
 
@@ -949,12 +1098,49 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="number" step="0.01"  name="beer_pricem" class="regular-text" value="<?php echo $beer_pricem; ?>">€
-					<p class="description"><?php _e( 'Example: 5€', 'alb' ); ?></p>
+					<input type="number" step="0.01"  name="beer_pricem" class="regular-text" value="<?php echo $beer_pricem; ?>" autocomplete="off">€
+					<p class="description"><?php _e( 'Example: 5', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr id="sizel">
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_sizel" style="font-weight: bold;"><?php _e( 'Size Large', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="text" name="beer_sizel" class="regular-text" value="<?php echo $beer_sizel; ?>">
+					<p class="description"><?php _e( 'Example: 1L', 'alb' ); ?></p>
+				</td>
+			</tr>
+
+			<tr id="pricel">
+				<td class="beer_meta_box_td" colspan="1">
+					<label for="beer_pricel" style="font-weight: bold;"><?php _e( 'Price Large', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="number" step="0.01"  name="beer_pricel" class="regular-text" value="<?php echo $beer_pricel; ?>" autocomplete="off">€
+					<p class="description"><?php _e( 'Example: 9', 'alb' ); ?></p>
 				</td>
 			</tr>
 
 		</table>
+
+		<script>
+			$(document).ready(function() {
+				$('input#title').attr('maxlength', 18);
+				
+				$('a#beer_category-add-toggle').click(function() {
+					$('input#new<?php _e('beer_category', 'alb') ?>').attr('maxlength', 20);
+				});
+
+				if ( $('h1.wp-heading-inline').text().indexOf( '<?php _e('Edit Tap Beer') ?>' ) !== -1 ) {
+					$('#sizel').hide();
+					$('#pricel').hide();
+				}
+			});
+		</script>
 
 	<?php }
 
@@ -1003,6 +1189,8 @@ class Alb {
 		$meta['beer_prices'] = ( isset( $_POST['beer_prices'] ) ? esc_textarea( $_POST['beer_prices'] ) : '' );
 		$meta['beer_sizem'] = ( isset( $_POST['beer_sizem'] ) ? esc_textarea( $_POST['beer_sizem'] ) : '' );
 		$meta['beer_pricem'] = ( isset( $_POST['beer_pricem'] ) ? esc_textarea( $_POST['beer_pricem'] ) : '' );
+		$meta['beer_sizel'] = ( isset( $_POST['beer_sizel'] ) ? esc_textarea( $_POST['beer_sizel'] ) : '' );
+		$meta['beer_pricel'] = ( isset( $_POST['beer_pricel'] ) ? esc_textarea( $_POST['beer_pricel'] ) : '' );
 
 		foreach ( $meta as $key => $value ) {
 			update_post_meta( $post->ID, $key, $value );
@@ -1013,6 +1201,7 @@ class Alb {
 	 * Register the time metaboxes to be used for the sandwich post type
 	 *
 	 */
+	/*
 	public function add_sandwich_meta_boxes() {
 		add_meta_box(
 			'sandwich_profile_fields',
@@ -1023,10 +1212,12 @@ class Alb {
 			'high'
 		);
 	}
+	*/
 
    /**
 	* The HTML for the sandwich profile fields
 	*/
+	/*
 	function render_sandwich_meta_boxes( $post ) {
 
 		$meta = get_post_custom( $post->ID );
@@ -1120,11 +1311,13 @@ class Alb {
 		</table>
 
 	<?php }
+	*/
 
    /**
 	* Save beer metaboxes
 	*
 	*/
+	/*
 	function save_sandwich_meta_boxes( $post_id ) {
 
 		global $post;
@@ -1160,6 +1353,7 @@ class Alb {
 			update_post_meta( $post->ID, $key, $value );
 		}
 	}
+	*/
 
 	/**
 	 * Register the metaboxes to be used for the event post type
@@ -1167,7 +1361,7 @@ class Alb {
 	 */
 	public function add_event_meta_boxes() {
 		add_meta_box(
-			'time_fields',
+			'event_fields',
 			__( 'Event description', 'alb' ),
 			array( $this, 'render_event_meta_boxes' ),
 			'event',
@@ -1207,7 +1401,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="date" name="event_start_display" class="regular-text" value="<?php echo date( 'Y-m-d', $event_start_display ); ?>">
+					<input type="date" name="event_start_display" class="regular-text" value="<?php echo date( 'Y-m-d', $event_start_display ); ?>" required>
 				</td>
 			</tr>
 
@@ -1217,7 +1411,7 @@ class Alb {
 					</label>
 				</td>
 				<td colspan="4">
-					<input type="date" name="event_end_display" class="regular-text" value="<?php echo date( 'Y-m-d', $event_end_display ); ?>">
+					<input type="date" name="event_end_display" class="regular-text" value="<?php echo date( 'Y-m-d', $event_end_display ); ?>" required>
 				</td>
 			</tr>
 
@@ -1277,6 +1471,116 @@ class Alb {
 		$meta['event_end_display'] = ( isset( $_POST['event_end_display'] ) ? strtotime( esc_textarea( $_POST['event_end_display'] ) ) : '' );
 		$meta['event_start_date'] = ( isset( $_POST['event_start_date'] ) ? strtotime( esc_textarea( $_POST['event_start_date'] ) ) : '' );
 		$meta['event_end_date'] = ( isset( $_POST['event_end_date'] ) ? strtotime( esc_textarea( $_POST['event_end_date'] ) ) : '' );
+
+		foreach ( $meta as $key => $value ) {
+			update_post_meta( $post->ID, $key, $value );
+		}
+	}
+
+	/**
+	 * Register the metaboxes to be used for the news post type
+	 *
+	 */
+	public function add_news_meta_boxes() {
+		add_meta_box(
+			'news_fields',
+			__( 'News description', 'alb' ),
+			array( $this, 'render_news_meta_boxes' ),
+			'news',
+			'normal',
+			'high'
+		);
+	}
+
+   /**
+	* The HTML for the fields
+	*/
+	function render_news_meta_boxes( $post ) {
+
+		$meta = get_post_custom( $post->ID );
+		$news_start_display = ! isset( $meta['news_start_display'][0] ) ? '' : $meta['news_start_display'][0];
+		$news_end_display = ! isset( $meta['news_end_display'][0] ) ? '' : $meta['news_end_display'][0];
+		$news_date = ! isset( $meta['news_date'][0] ) ? '' : $meta['news_date'][0];
+
+		wp_nonce_field( basename( __FILE__ ), 'news_fields' ); ?>
+
+		<table class="form-table">
+
+			<tr>
+				<td class="news_sc" colspan="1">
+					<label for="event_sc" style="font-weight: bold;"><?php _e( 'News Shortcode', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<code class="news_sc">[<?php echo get_post_type( $post->ID ); ?> id="<?php echo $post->ID; ?>"]</code>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="news_meta_box_td" colspan="1">
+					<label for="news_start_display" style="font-weight: bold;"><?php _e( 'Start Display Date', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="date" name="news_start_display" class="regular-text" value="<?php echo date( 'Y-m-d', $news_start_display ); ?>" required>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="news_meta_box_td" colspan="1">
+					<label for="news_end_display" style="font-weight: bold;"><?php _e( 'End Display Date', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="date" name="news_end_display" class="regular-text" value="<?php echo date( 'Y-m-d', $news_end_display ); ?>" required>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="news_meta_box_td" colspan="1">
+					<label for="news_date" style="font-weight: bold;"><?php _e( 'News Date', 'alb' ); ?>
+					</label>
+				</td>
+				<td colspan="4">
+					<input type="date" name="news_date" class="regular-text" value="<?php echo ( $news_date == '' ? date( 'Y-m-d' ) : date( 'Y-m-d', $news_date ) ); ?>">
+				</td>
+			</tr>
+
+		</table>
+
+	<?php }
+
+   /**
+	* Save time metaboxes
+	*
+	*/
+	function save_news_meta_boxes( $post_id ) {
+
+		global $post;
+
+		// Verify nonce
+		if ( !isset( $_POST['news_fields'] ) || !wp_verify_nonce( $_POST['news_fields'], basename(__FILE__) ) ) {
+			return $post_id;
+		}
+
+		// Check Autosave
+		if ( (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) || ( defined('DOING_AJAX') && DOING_AJAX) || isset($_REQUEST['bulk_edit']) ) {
+			return $post_id;
+		}
+
+		// Don't save if only a revision
+		if ( isset( $post->post_type ) && $post->post_type == 'revision' ) {
+			return $post_id;
+		}
+
+		// Check permissions
+		if ( !current_user_can( 'edit_post', $post->ID ) ) {
+			return $post_id;
+		}
+
+		$meta['news_start_display'] = ( isset( $_POST['news_start_display'] ) ? strtotime( esc_textarea( $_POST['news_start_display'] ) ) : '' );
+		$meta['news_end_display'] = ( isset( $_POST['news_end_display'] ) ? strtotime( esc_textarea( $_POST['news_end_display'] ) ) : '' );
+		$meta['news_date'] = ( isset( $_POST['news_date'] ) ? strtotime( esc_textarea( $_POST['news_date'] ) ) : '' );
 
 		foreach ( $meta as $key => $value ) {
 			update_post_meta( $post->ID, $key, $value );

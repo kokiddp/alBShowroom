@@ -64,7 +64,7 @@ if ( count( $tap_beers ) > 0 ) {
 		$content = get_post_field( 'post_content', $beer->ID );
 		$categories = get_the_terms( $beer->ID, 'beer_category' );
 		$beer_name = ! isset( $beer->post_title ) ? '' : $beer->post_title;
-		$beer_category = count( $categories ) == 0 ? '' : $categories[0]->name;
+		$beer_category = ( count( $categories ) == 0 && $categories ) ? '' : $categories[0]->name;
 
 		$beer_brew_name = ! isset( $meta['beer_brew_name'][0] ) ? '' : $meta['beer_brew_name'][0];
 		$beer_brew_add = ! isset( $meta['beer_brew_add'][0] ) ? '' : $meta['beer_brew_add'][0];		
@@ -122,7 +122,7 @@ if ( count( $tap_beers ) > 0 ) {
 		    	<div class="tap-icon">
 		      		<?= get_the_post_thumbnail( $beer->ID, array(60,60) ); ?>
 		    	</div>
-		    	<div class="tap-name marquee">
+		    	<div class="tap-name">
 		      		<p><?= $beer_name; ?></p>      
 		    	</div>
 		    	<div class="tap-brewery">
@@ -131,7 +131,7 @@ if ( count( $tap_beers ) > 0 ) {
 		          			<div class="tap-subbrewery-row1-cell">
 		            			<div class="tap-subbrewery-row1-table">
 		              				<div class="tap-subbrewery-row1-row">
-		                				<div class="tap-brewery-name marquee">
+		                				<div class="tap-brewery-name">
 		                  					<p><?= $beer_brew_name; ?></p>
 		                				</div>
 		              				</div>
@@ -142,7 +142,7 @@ if ( count( $tap_beers ) > 0 ) {
 		          			<div class="tap-subbrewery-row2-cell">
 		            			<div class="tap-subbrewery-row2-table">
 		              				<div class="tap-subbrewery-row2-row">
-		                				<div class="tap-brewery-address marquee">
+		                				<div class="tap-brewery-address">
 		                  					<p><?= $beer_brew_add; ?></p>                  
 		                				</div>
 		              				</div>
@@ -157,11 +157,11 @@ if ( count( $tap_beers ) > 0 ) {
 		          			<div class="tap-submeta-row1-cell">
 		            			<div class="tap-submeta-row1-table">
 		              				<div class="tap-submeta-row1-row">
-		                				<div class="tap-style marquee">
+		                				<div class="tap-style">
 		                  					<p><?= $beer_category; ?></p>
 		                				</div>
 		                				<div class="tap-abv">
-		                  					<p><span class='apex'><?php _e('ABV', 'alb'); ?></span> <?= $beer_abv; ?></p>                  
+		                  					<p><span class='apex'><?php _e('ABV', 'alb'); ?></span> <?= $beer_abv; ?>%</p>                  
 		                				</div>
 		                				<div class="tap-ibu">
 		                  					<p><span class='apex'><?php _e('IBU', 'alb'); ?></span> <?= $beer_ibu; ?></p>                  
@@ -183,10 +183,10 @@ if ( count( $tap_beers ) > 0 ) {
 		        		</div>
 		      		</div>
 		    	</div>
-		    	<div class="tap-prices">
+		    	<div class="tap-prices tl">
 		      		<p><span class='apex'><?= $beer_sizes; ?></span> <?= $beer_prices; ?><?php if ( !empty( $beer_prices ) && $beer_prices != '' ) { echo ' €'; } ?></p>      
 		    	</div>
-		    	<div class="tap-pricem">
+		    	<div class="tap-pricem tl">
 		      		<p><span class='apex'><?= $beer_sizem; ?></span> <?= $beer_pricem; ?><?php if ( !empty( $beer_pricem ) && $beer_pricem != '' ) { echo ' €'; } ?></p>      
 		    	</div>
 		  	</div>

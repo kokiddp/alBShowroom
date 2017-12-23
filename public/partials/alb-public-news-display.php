@@ -24,7 +24,7 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><?php _e('Events', 'alb'); ?></title>
+  <title><?php _e('News', 'alb'); ?></title>
 
   <link rel="stylesheet" href="<?= $url . 'css/alb-public.css' ?>">
 
@@ -46,10 +46,10 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
 <body>
 
 <div id="header">
-  <p class="header_title"><?php _e('INCOMING EVENTS', 'alb'); ?></p>
+  <p class="header_title"><?php _e('NEWS FROM THE KITCHEN', 'alb'); ?></p>
 </div>
 
-<div id="event_wrapper" class="jcarousel">
+<div id="news_wrapper" class="jcarousel">
   <ul>
 
 <?php
@@ -57,62 +57,51 @@ $url = str_replace( 'partials/', '', plugin_dir_url( __FILE__ ) );
 $options = get_option( 'alb_settings' );
 
 $args = array(
-  'post_type'  => 'event',
+  'post_type'  => 'news',
   'post_status' => 'publish',
   'numberposts' => -1,
-  'meta_key' => 'event_start_date',
+  'meta_key' => 'news_date',
   'orderby'   => 'meta_value_num',
   'order'      => 'ASC',
   'meta_query' => array(
     'relation' => 'AND',
     array(
-      'key'     => 'event_start_display',
+      'key'     => 'news_start_display',
       'value'   => time(),
       'compare' => '<=',
     ),
     array(
-      'key'     => 'event_end_display',
+      'key'     => 'news_end_display',
       'value'   => time(),
       'compare' => '>=',
     ),
   ),
 );
 
-$events = get_posts($args);
+$news = get_posts($args);
 
-if ( count( $events ) > 0 ) {
-  foreach ($events as $index => $event) {
-    $meta = get_post_meta( $event->ID );
-    $event_name = ! isset( $event->post_title ) ? '' : $event->post_title;
-    $content = get_post_field( 'post_content', $event->ID );
+if ( count( $news ) > 0 ) {
+  foreach ($news as $index => $pon) {
+    $meta = get_post_meta( $pon->ID );
+    $news_name = ! isset( $pon->post_title ) ? '' : $pon->post_title;
+    $content = get_post_field( 'post_content', $pon->ID );
 
-    $event_start_date = ! isset( $meta['event_start_date'][0] ) ? ' - ' : date_i18n( get_option( 'date_format' ), $meta['event_start_date'][0] );;
-    $event_end_date = ! isset( $meta['event_end_date'][0] ) ? ' - ' : date_i18n( get_option( 'date_format' ), $meta['event_end_date'][0] );
+    $news_date = ! isset( $meta['news_date'][0] ) ? ' - ' : date_i18n( get_option( 'date_format' ), $meta['news_date'][0] );;
 
     ?>
 
     <li>
-      <div class="event_item">
-        <div class="event_pic">
-          <?= get_the_post_thumbnail( $event->ID, array(497,311) ); ?>
+      <div class="news_item">
+        <div class="news_pic">
+          <?= get_the_post_thumbnail( $pon->ID, array(497,311) ); ?>
         </div>
-        <div class="event_name">
-          <?= $event_name ?>
+        <div class="news_name">
+          <?= $news_name ?>
         </div>
-        <div class="event_dates">
-          <?php
-            if ($event_end_date == ' - ') {
-              echo __('The ', 'alb') . $event_start_date;
-            }
-            else if ($event_start_date != $event_end_date) {
-              echo __('From ', 'alb') . $event_start_date . __(' to ', 'alb') . $event_end_date;
-            }
-            else {
-              echo __('The ', 'alb') . $event_start_date;
-            }            
-          ?>
+        <div class="news_date">
+          <?php echo $news_date; ?>
         </div>
-        <div class="event_text">
+        <div class="news_text">
           <p><?= $content ?></p>
         </div>
       </div>

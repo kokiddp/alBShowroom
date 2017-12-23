@@ -106,6 +106,41 @@
 
 			});
 	    }
+	    else if (window.location.href.indexOf("news") > -1) {
+	    	$('.jcarousel').jcarousel({
+		        wrap: 'circular',
+		        animation: {
+			        duration: 800,
+			        easing:   'linear'
+			    }
+		    })
+		    .jcarouselAutoscroll({
+	            interval: 8000,
+	            target: '+=1',
+	            autostart: true
+	        });
+
+	        var supportedFlag = $.keyframe.isSupported();
+
+			var scrolling_p = $(".news_text > p");
+
+			$.each(scrolling_p, function(index, value) {
+
+				if ($(this).outerHeight(true) > $(this).parent().outerHeight(true)) {
+
+					var start = 100 / $(this).outerHeight(true) * $(this).parent().outerHeight(true);
+					var speed = $(this).outerHeight(true) / $(this).parent().outerHeight(true) * 7;
+					$.keyframe.define([{
+					    name: 'albnews-' + index,
+					    '0%': {'transform': 'translate3d(0, ' + start + '%, 0)'},
+					    '100%': {'transform': 'translate3d(0, -100%, 0)'}
+					}]);
+					$(this).css('animation', 'albnews-' + index + ' ' + speed + 's linear infinite');
+					$(this).parent().css('overflow', 'hidden');
+				}
+
+			});
+	    }
 		
 	});
 

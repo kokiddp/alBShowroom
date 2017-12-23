@@ -672,4 +672,44 @@ class Alb_Admin {
 
 	}
 
+	/**
+	 * Check the category name on edit page and enforces limit to 20 chars.
+	 *
+	 * @since    1.0.0
+	 */
+	public function check_category_name_edit() {
+		?>
+
+		<script>
+			jQuery(document).ready(function(){
+
+				jQuery('input#name').attr('maxlength', 20);
+
+			});
+		</script>
+
+		<?php
+	}
+
+	/**
+	 * Check the category name on add page and enforces limit to 20 chars.
+	 *
+	 * @since    1.0.0
+	 */
+	public function check_category_name_add() {
+
+		?>
+
+		<script>
+			jQuery(document).ready(function(){
+
+				jQuery('input#tag-name').attr('maxlength', 20);
+
+			});
+		</script>
+
+		<?php
+
+	}
+
 }
