@@ -108,7 +108,7 @@ if ( count( $events ) > 0 ) {
               echo __('From ', 'alb') . $event_start_date . __(' to ', 'alb') . $event_end_date;
             }
             else {
-              echo __('The ', 'alb') . $event_start_date;
+              echo $event_start_date;
             }            
           ?>
         </div>

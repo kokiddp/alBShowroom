@@ -99,7 +99,7 @@ if ( count( $news ) > 0 ) {
           <?= $news_name ?>
         </div>
         <div class="news_date">
-          <?php echo $news_date; ?>
+          <?= $news_date; ?>
         </div>
         <div class="news_text">
           <p><?= $content ?></p>
